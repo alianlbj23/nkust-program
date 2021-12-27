@@ -134,7 +134,7 @@ def SortTermMemoryGame(request, pk, n, gameName):
         new = GameMod.objects.create(username = tmp, game_mod="SortTermMemoryGame")
         new.save()
         #/media/image/
-    path = '/media/stm_picture2'
+    path = '/media/stm_picture2/'
     #path = str(settings.MEDIA_ROOT)+'/'+"stm_picture2"
     print("!!!!!!!!!!!!", path)
     allFileList = os.listdir(path)#抓此目錄底下的檔案(陣列格式)
@@ -146,10 +146,10 @@ def SortTermMemoryGame(request, pk, n, gameName):
     file_record2 = list()#紀錄另外兩個資料夾
     for i in range(len(allFileList)):
         file_record.append(allFileList[i])
-        url = path+'/'+str(allFileList[i])
+        url = path+str(allFileList[i])
         filelist = os.listdir(url)
         shuffle(filelist)
-        url = url+'/'+str(filelist[0])
+        url = url+str(filelist[0])
         first_picture_url.append(url[1:len(url)])#避開存到的逗點
         if i == 5:
             break
