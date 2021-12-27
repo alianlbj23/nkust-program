@@ -133,8 +133,9 @@ def SortTermMemoryGame(request, pk, n, gameName):
     if new.count() == 0:#如果玩家沒有短期記憶的資料這裡新增一個
         new = GameMod.objects.create(username = tmp, game_mod="SortTermMemoryGame")
         new.save()
-    #path = '.\\media\\stm_picture2'
-    path = str(settings.MEDIA_ROOT)+'/'+"stm_picture2"
+        #/media/image/
+    path = 'media/stm_picture2'
+    #path = str(settings.MEDIA_ROOT)+'/'+"stm_picture2"
     print("!!!!!!!!!!!!", path)
     allFileList = os.listdir(path)#抓此目錄底下的檔案(陣列格式)
     
