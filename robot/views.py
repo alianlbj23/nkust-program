@@ -134,7 +134,7 @@ def SortTermMemoryGame(request, pk, n, gameName):
         new = GameMod.objects.create(username = tmp, game_mod="SortTermMemoryGame")
         new.save()
         #/media/image/
-    path = '/media/stm_picture2'
+    path = './media/stm_picture2/'
     #path = str(settings.MEDIA_ROOT)+'/'+"stm_picture2"
     print("!!!!!!!!!!!!", path)
     allFileList = os.listdir(path)#抓此目錄底下的檔案(陣列格式)
