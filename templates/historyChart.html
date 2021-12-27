@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}圖表輸出{% endblock %}
+{% block css %}
+<style>
+    .v13_58 {
+        color: rgba(0, 0, 0, 1);
+        font-family: Roboto;
+        font-weight: Regular;
+        font-size: 50px;
+        opacity: 1;
+        top: 0px;
+        left:3px;
+        color:orange;
+    }
+    .button5 {
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 22px;
+        border: 2px solid #3d3d3d;
+        border-radius: 27px;
+        background: #fafafa;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ededed));
+        background: -moz-linear-gradient(top, #fafafa, #ededed);
+        background: linear-gradient(to bottom, #fafafa, #ededed);
+        -webkit-box-shadow: #171717 0px 0px 2px 0px;
+        -moz-box-shadow: #171717 0px 0px 2px 0px;
+        box-shadow: #171717 0px 0px 2px 0px;
+        text-shadow: #591717 1px 1px 1px;
+        font: normal normal normal 28px arial;
+        color: #0a0a0a;
+        text-decoration: none;
+    }
+    .button5:hover{
+        background-color: #000;
+        color: rgb(59, 59, 59);
+    }
+    
+    .button5:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px rgb(148, 148, 148);
+      transform: translateY(4px);
+    }
+    .button5:focus {
+        border: 2px solid #626262;
+        background: #ffffff;
+        background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+        background: -moz-linear-gradient(top, #ffffff, #ffffff);
+        background: linear-gradient(to bottom, #ffffff, #ffffff);
+        color: #0a0a0a;
+        text-decoration: none;
+    }
+    .button5:active {
+        background: #969696;
+        background: -webkit-gradient(linear, left top, left bottom, from(#969696), to(#ededed));
+        background: -moz-linear-gradient(top, #969696, #ededed);
+        background: linear-gradient(to bottom, #969696, #ededed);
+    }
+    .button5:after{
+        content:  "\0000a0";
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        margin: 0 -4px -6px 4px;
+        position: relative;
+        top: 0px;
+        left: -1px;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABh0lEQVRIibXVMUhVYRQH8B/Pi4i8wUlERB4RTRIi4uAQDg4i4vhoampoCJEIaWpxEJKmMBAFRxERcVEcIlpaREJEQyIkRIJw0D2k4dwH+VDve3rff/vu933nf87//L9zuRnJLXv3xiPMNSp4H35jO49ghar1MNaxiFZ0oXjNuTuhjGMMoBe7OMIpvmMpPVO8S/CX+CG0r0YLHuAZ1lLC9+ioJ/gpOms8347p9M5rNGdd6MAOZtSndRc28LmW5NrwCQvC/+14inH0u1n3Al4JeR9mkTRjJc1qBCdYxhdh2z3MCgNUV1rGT5SySBLxwE5cfQcJejCF/ZR0uOruc+G8TJcV8BZbtyQxhm9YFXJWMI8PWQQV9GXsJ3gjpBlMvxVFPwZqJakFQ/iF0XRdFobJFY9TkidC4gPhvlwxKEZNNybV0Yt6MCHMURK9SHKZkv/ho2h0P/6iuylngksxgd+JCfwn7wrgK87FBC7lXUEFl3iBnUZUAJuiB/n8Cq/BGQ5x0SiJ4AK7/wCn8UdE6vGrrAAAAABJRU5ErkJggg==") no-repeat left center transparent;
+        background-size: 100% 100%;
+    }
+    .yearTitle{
+        font-family: Roboto;
+        color:orange;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <span class="v13_58" ><img src="/media/image/scroll.png" width="60" height="60">{{title}}</span>
+            </li>
+        
+        </ul>
+        
+        
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+        <a href="/historyMonth/{{pk}}/{{gameName}}/{{year}}/"><button  class="button5">&nbsp;&nbsp;上一頁</button></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{% if totalNumber != 0 %}
+<canvas id="myChart" width="-10%" height="-10%"></canvas>
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [
+            {% for data in totalData %}
+                '{{data.add_time|date:"H:i"}}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: '得分',
+            data: [
+                {% for data in totalData %}
+                    {{data.correct_rate}},
+                {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% else %}
+<p>無資料</p>
+{% endif %}
+
+{% endblock %}
