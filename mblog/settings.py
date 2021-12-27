@@ -134,13 +134,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'))
-django_heroku.settings(locals())
+
 
 #靜態檔設定
 #儲存django的圖片檔，也可使用絕對位置，MEDIA_ROOT = '/robot/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 #/media/也不一定要叫mdeia，可以改成/aaaaaaa/ ， 看使用者喜好
 MEDIA_URL = '/media/'
-
-
+django_heroku.settings(locals())
+#nkust-robot-test
 #讓Django認識這個路徑
