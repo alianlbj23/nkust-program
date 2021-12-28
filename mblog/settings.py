@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-import django_heroku
 
 #帳密都叫robot
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -141,6 +140,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 #/media/也不一定要叫mdeia，可以改成/aaaaaaa/ ， 看使用者喜好
 MEDIA_URL = '/media/'
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 #nkust-robot-test
 #讓Django認識這個路徑
