@@ -10,6 +10,8 @@ from django.shortcuts import redirect
 from .models import *
 import pandas as pd
 from django.conf import settings
+#處理ubuntu編碼問題
+#coding=utf-8
 
 from django.contrib import messages
 from .forms import SignupForm
@@ -75,8 +77,7 @@ def login(request):
         dataPk = int(request.GET.get("dataPk"))
         deleteData = Userdata.objects.filter(pk=dataPk)
         #path = str(pathlib.Path(__file__).parent.absolute())
-        path = str(os.getcwd()) + "\\media\\headshot\\"
-        
+        path = settings.MEDIA_ROOT + '/headshot/' 
         #dirlist = os.listdir(path)
         deleteDataUrl = list(deleteData.values('image'))[0]['image']
         deleteDataUrl = str(deleteDataUrl).split("headshot/")[1]
@@ -133,10 +134,10 @@ def SortTermMemoryGame(request, pk, n, gameName):
     if new.count() == 0:#如果玩家沒有短期記憶的資料這裡新增一個
         new = GameMod.objects.create(username = tmp, game_mod="SortTermMemoryGame")
         new.save()
-    path = './media/stm_picture2'
+    #path = './media/stm_picture2'
     path2 = '/media/stm_picture2'
     #/media/stm_picture2//各種生活器具/0642544_PE701242_S5.jpg
-    #path = str(settings.MEDIA_ROOT)
+    path = settings.MEDIA_ROOT + '/stm_picture2'
     print("!!!!!!!!!!!!", path)
     #:\Users\User\program2\nkust-program\media/stm_picture2/鳥/brown-g51282f1d3_640.jpg
     allFileList = os.listdir(path)#抓此目錄底下的檔案(陣列格式)
@@ -147,7 +148,7 @@ def SortTermMemoryGame(request, pk, n, gameName):
     file_record = list()#紀錄哪幾個資料夾被選了
     file_record2 = list()#紀錄另外兩個資料夾
     for i in range(len(allFileList)):
-        file_record.append(allFileList[i])
+        path2 = '/media/stm_picture2'
         path2 += '/'+str(allFileList[i])
         url = path+'/'+str(allFileList[i])
         filelist = os.listdir(url)
@@ -181,6 +182,7 @@ def SortTermMemoryGame(request, pk, n, gameName):
         id = random.randint(1, top_number)
         while id in first_list or id in first_list_copy:#如果id有存在一開始要顯示的list，或現在這個補5張的有重複
             id = random.randint(1, top_number)
+        first_list_copy.append(id)
         first_list_copy.append(id)
     
     pic1_first = picture.get(number = first_list[0])
@@ -428,4 +430,3 @@ def historyChart(request, pk, gameName, year, month, day):
     
     
     return render(request, 'historyChart.html', locals())
-
