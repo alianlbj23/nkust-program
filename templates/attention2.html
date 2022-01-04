@@ -6,10 +6,18 @@
         var ans_time = []
         var count
         var index = 0
+        $(".heterophony").click(function(){
+            var player = $("#heterophonyMusic")[0];
+            player.pause()
+            player.play();
+        });
+
         $(".soundplayer").click(function(){
+            $(".soundplayer").css("display", "none")
             var player = $("#play")[0];
             player.pause()
             player.play();
+            $(".erroBtn").css("display", "").addClass("fadein")
             window.setInterval(countdown, 1000);
             timer = document.getElementById("countdown");
             function countdown() {
@@ -27,24 +35,30 @@
                 ans_time[index] = count
                 index += 1
                 if(count == "6" || count == "9" || count == "12"){
-                    $(".messageCorrect").css('display','block');
+                    $(".messageCorrect").css('display', 'block').addClass("show");
                     setTimeout(function(){
                         $(".messageCorrect").css('display','none');
                     },1000);
                 }
                 else if(count == "7" || count == "10" || count == "13"){
-                    $(".messageWarring").css('display','block');
+                    $(".messageWarring").css('display', 'block').addClass("show");
                     setTimeout(function(){
                         $(".messageWarring").css('display','none');
                     },1000);
                 }
                 else{
-                    $(".messageErro").css('display','block');
+                    $(".messageErro").css('display', 'block').addClass("show");
                     setTimeout(function(){
                         $(".messageErro").css('display','none');
                     },1000);
                 }
                 console.log(ans_time)
+            }
+            else{
+                $(".noChance").css('display', 'block').addClass("show");
+                    setTimeout(function(){
+                        $(".noChance").css('display','none');
+                },1000);
             }
         });
 
@@ -73,7 +87,11 @@
 {% endblock %}
 
 {% block css %}
+<link rel="preconnect" href="https://fonts.gstatic.com"> 
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap');
     /* 父容器 */
     .section {
         height: 50vh;
@@ -91,7 +109,7 @@
         /* 外框 */
 
     }
-    .messageCorrect, .messageWarring, .messageErro{
+    .messageCorrect, .messageWarring, .messageErro, .noChance{
         display: flex;
         justify-content: center; 
         align-items: center; 
@@ -315,14 +333,134 @@
         background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA/ElEQVRIie2VIQvCUBSFP2Y1G4xiEptFzGIVzIb9BDEYrWZ/gVGMVk0iiMUkCFpsBpuYDGOG3cF1uO2xOYseGOdxuO+cvb337uCPL8MCmmkMqjHmI8ABuknMbeAeEzADXOAGlEyN88BEJroGtUepm5qYV4G9Mg8GWEA/8LYdqXsQswob75O4hAcMRFsHQs+iD3xx+MYo7NFo4W2qy+vpGYu2tETIRS0lAgtgI+O20nfCFT/ASRgAsBUuK+0iXLDIGJ8IqAuflFYUvqbdgxbQkPFc6TXhQ9RkG/NjulLa22MaBpOL1iPhRfORaavQsMmo2Wlk2q5NkPqH84N4Avh1UjMFOj/lAAAAAElFTkSuQmCC") no-repeat left center transparent;
         background-size: 100% 100%;
     }
+    .heterophony, .heterophony::after {
+        width: 380px;
+        height: 86px;
+        font-size: 36px;
+        background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
+        border: 0;
+        color: #fff;
+        letter-spacing: 3px;
+        line-height: 88px;
+        box-shadow: 6px 0px 0px #00E6F6;
+        outline: transparent;
+        position: relative;
+      }
+      
+      .heterophony::after {
+        --slice-0: inset(50% 50% 50% 50%);
+        --slice-1: inset(80% -6px 0 0);
+        --slice-2: inset(50% -6px 30% 0);
+        --slice-3: inset(10% -6px 85% 0);
+        --slice-4: inset(40% -6px 43% 0);
+        --slice-5: inset(80% -6px 5% 0);
+        
+        content: 'AVAILABLE NOW';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
+        text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
+        clip-path: var(--slice-0);
+      }
+      
+      .heterophony:hover::after {
+        animation: 1s glitch;
+        animation-timing-function: steps(2, end);
+      }
+      
+      @keyframes glitch {
+        0% {
+          clip-path: var(--slice-1);
+          transform: translate(-20px, -10px);
+        }
+        10% {
+          clip-path: var(--slice-3);
+          transform: translate(10px, 10px);
+        }
+        20% {
+          clip-path: var(--slice-1);
+          transform: translate(-10px, 10px);
+        }
+        30% {
+          clip-path: var(--slice-3);
+          transform: translate(0px, 5px);
+        }
+        40% {
+          clip-path: var(--slice-2);
+          transform: translate(-5px, 0px);
+        }
+        50% {
+          clip-path: var(--slice-3);
+          transform: translate(5px, 0px);
+        }
+        60% {
+          clip-path: var(--slice-4);
+          transform: translate(5px, 10px);
+        }
+        70% {
+          clip-path: var(--slice-2);
+          transform: translate(-10px, 10px);
+        }
+        80% {
+          clip-path: var(--slice-5);
+          transform: translate(20px, -10px);
+        }
+        90% {
+          clip-path: var(--slice-1);
+          transform: translate(-10px, 0px);
+        }
+        100% {
+          clip-path: var(--slice-1);
+          transform: translate(0);
+        }
+      }
+      .fadein{
+        opacity: 1;
+        animation-name: fadeInOpacity;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: 0.5s;
+    }
+    @keyframes fadeInOpacity {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .show{
+        position: absolute;
+        z-index:1;
+        left:40%;
+        top:40%;
+        
+    }
 </style>
 {% endblock %}
 
 {% block content %}
+<audio controls autoplay style="visibility:hidden" id="attention_2">
+    <source src="/media/music/attention_2.mp3" type="audio/mpeg">
+</audio>
 <h2>歡迎遊玩注意力遊戲!</h2>
 <h3>
     <div style="font-size:150%;" id="IntroduceText"> 
-        遊戲提示:此音頻當中出現異音時，請按下<div class="button3">錯誤</div>按鈕，準備好了請點<div class="soundplayer">播放</div>
+        遊戲提示:不知道異音是什麼，可以點擊這個
+        <button class="heterophony">
+            <span style="font-family: 'Noto Sans JP', sans-serif;">
+                點我聽異音!
+            </span>
+        </button>
+        按鈕，準備好要開始遊玩時，請點擊播放
+        <img src="/media/image/heterophony.png" width="200" height="80">
+        按鈕
+        
+    
     </div>
 </h3>
 <br>
@@ -336,16 +474,24 @@
 <div class="messageErro">
     <img src="/media/image/close.png" width="80" height="80"><span style="font-size:200%;color:red;font-weight:bold">錯誤</span>
 </div>
-
+<div class="noChance">
+    <img src="/media/image/sad.png" width="80" height="80">
+    <span style="font-size:200%;color:red;font-weight:bold">
+        喔不...您的三次機會用光了...
+    </span>
+</div>
 <div class="section">
     <div class="section-middle">
         <audio id="play">
             <source src="/media/music/test.mp3" type="audio/mpeg">
         </audio>
+        <audio style="visibility:hidden" id="heterophonyMusic">
+            <source src="/media/music/heterophony.mp3" type="audio/mpeg">
+        </audio>
         <br><br>
         <button class="soundplayer"><i class="fas fa-assistive-listening-systems " >播放</i></button>
         <br/><br/>
-        <button class="erroBtn">錯誤</button>
+        <button class="erroBtn" style="display: none">錯誤</button>
         <a> &nbsp; &nbsp; &nbsp; </a>
         <a href='/settlement/{{ pk }}/AttentionGame/'><button class="button2" style="display: none">遊戲結束</button></a>
     </div>

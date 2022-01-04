@@ -262,22 +262,23 @@
         background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABF0lEQVRIibXWQWrCQBjF8V9FuugJXPQS3ZTiWqQn6HEEN917DilFvIMHKd2WLooLpWAXiTDqTGYS0wcDYSZ5/+97CZmBEdbY4dBybHEno3UH42LAENP6+hObXDVn2uM3Mj/BI14F1Sxbmqc0UXV2wHzQk+lRU7w7i62vDib4CfzmGPQFCGM5YBYuXguYuqz8RNcAkrGUAJ5jN5+ZJ2PJAWb13CIBycUyxks9LgD3+A7mF5HKc7Esg/VoB08RyEB5LFnAsc0Q8hapPKUiQAzS+LV0AXAZV1PlnQDHTr4KzU8Aw8IHNnhQ/dJbqRQAH23NaX5RvejfATeqzf5Wty0zpbHqj7CHle6bfm6sqI4tK92OLamxqz1Hf7umx5GpaJqCAAAAAElFTkSuQmCC") no-repeat left center transparent;
         background-size: 100% 100%;
     }
+    
 </style>
 {% endblock %}
 {% block content %}
 <h2>歡迎遊玩定向力遊戲(平板模式)!</h2>
 <audio controls autoplay style="visibility:hidden" id="Orientation2">
-    <source src="/media/music/Orientation2.mp3" type="audio/mpeg">
+    <source src="/media/music/Orientation_2.mp3" type="audio/mpeg">
 </audio>
 <h3>
-    <div style="font-size:150%;" id="IntroduceText"> 遊戲提示:請依照這個順序，將色塊移動到下方</div>
+    <div style="font-size:150%;" id="IntroduceText"> 遊戲提示:記憶完下面的色塊後，就點擊按鈕開始遊戲</div>
 </h3>
 <div class="wrapper0">
     {% for color in randomColor %}
     <div class="empty0" id="{{ color }}" style="background-color:{{ color }}"></div>
     {% endfor %}
 </div>
-<button class="prepareButton" id="readybtn" style="display:none;">準備好了</button>
+<button class="prepareButton" id="readybtn" >準備好了</button>
 
 
 <div class="after wrapper">
@@ -296,18 +297,22 @@
 </div>
 
 <button style="display:none" class="endButton"><a href="/settlement/{{ pk }}/OrientationGame/">送出</a></button>
-<p id="countdown2">5</p>
 <p id="countdown" class="after">0</p>
 {% endblock %}
 
 {% block javascript%}
 <script>
     $(document).ready(function () {
-        window.setInterval(countdown2, 1000);
-        timer2 = document.getElementById("countdown2");
-        function countdown2() {
-            timer2.innerHTML = timer2.innerHTML - 1;
-        }
+
+        $(".prepareButton").click(function(){
+            $(".wrapper0").css("display", 'none');
+            $("#countdown2").css("display", 'none');
+            $(".after").removeClass("after").addClass("fadein")
+            $(this).css("display", "none");
+            window.setInterval(countdown, 1000);
+            timer = document.getElementById("countdown");
+        });
+        /*
         setTimeout(function () {
             $(".wrapper0").css("display", 'none');
             $("")
@@ -321,7 +326,7 @@
             $(this).css("display", "none");
             window.setInterval(countdown, 1000);
             timer = document.getElementById("countdown");
-        });
+        });*/
         function countdown() {
             timer.innerHTML = timer.innerHTML - (-1);
         }
@@ -360,7 +365,7 @@
             let touch4 = event.targetTouches[0];
             let target = event.target
 
-            if (target.id == "#ff6384") {
+            if (target.id == "#FF3300") {
                 drag[0].style.top = `${touch1.pageY - (wrapper.offsetTop) - (drag[0].offsetWidth / 2)}px`;
                 drag[0].style.left = `${touch1.pageX - (wrapper.offsetLeft) - (drag[0].offsetHeight / 2)}px`;
                 empty.map(item => {
@@ -421,7 +426,7 @@
                 })
             }
 
-            else if (target.id == "#9966ff") {
+            else if (target.id == "#00CC33") {
                 drag[3].style.top = `${touch4.pageY - (wrapper.offsetTop) - (drag[3].offsetWidth / 2)}px`;
                 drag[3].style.left = `${touch4.pageX - (wrapper.offsetLeft) - (drag[3].offsetHeight / 2)}px`;
                 empty.map(item => {
@@ -448,10 +453,22 @@
         function touchEnd() {
             if (itemAppend.classList.contains('active')) {
                 itemAppend.append(this);
-                if (this.id == itemAppend.id) {
-                    correct += 1
-                }
                 dropCount += 1
+                if (this.id == itemAppend.id) {
+                    f = clist.indexOf(this.id)
+                    if(f==-1){
+                        clist.push(this.id)
+                    }
+                    
+                }
+                else{
+                    f = clist.indexOf(this.id) 
+                    if(f!=-1){
+                        delete_index = $.inArray(this.id, clist);
+                        clist.splice(delete_index, 1);
+                    }
+                }
+                console.log(clist)
                 if (dropCount == 4) {
                     $(".endButton").css("display", "")
                 }
@@ -459,10 +476,11 @@
                 this.style.left = `${itemAppend.offsetLeft}px`;
 
 
-                this.removeEventListener("touchmove", touchMove)
-                this.removeEventListener('touchend', touchEnd)
+                //this.removeEventListener("touchmove", touchMove)
+                //this.removeEventListener('touchend', touchEnd)
             }
             else {
+                
                 this.style.top = `${itemAppend.offsetTop}px`;
                 this.style.left = `${itemAppend.offsetLeft}px`;
 
@@ -471,6 +489,7 @@
 
         $(".endButton").click(function () {
             count_number = $("#countdown").text();
+            correct = clist.length;
             $.ajax({
                 url: "/OrientationAjax/{{ pk }}/",
                 traditional: true,

@@ -334,7 +334,7 @@ def OrientationGame(request, pk, n, gameName):
     if new.count() == 0:#如果玩家沒有注意力的資料這裡新增一個
         new = GameMod.objects.create(username = tmp, game_mod="OrientationGame")
         new.save()
-    randomColor = ["#ff6384", "#36a2eb", "#ffce56", "#9966ff"]
+    randomColor = ["#FF3300", "#36a2eb", "#ffce56", "#00CC33"]
     shuffle(randomColor)    
     return render(request, 'Orientation2.html', locals())
 
@@ -365,9 +365,9 @@ def OrientationPadGame(request, pk, n, gameName):
     if new.count() == 0:#如果玩家沒有注意力的資料這裡新增一個
         new = GameMod.objects.create(username = tmp, game_mod="OrientationGame")
         new.save()
-    randomColor = ["#ff6384", "#36a2eb", "#ffce56", "#9966ff"]
+    randomColor = ["#FF3300", "#36a2eb", "#ffce56", "#00CC33"]
     shuffle(randomColor)
-    colors = ["#ff6384", "#36a2eb", "#ffce56", "#9966ff"]
+    colors = ["#FF3300", "#36a2eb", "#ffce56", "#00CC33"]
     return render(request, 'OrientationPad2.html', locals())
 # Create your views here.
 

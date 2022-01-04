@@ -370,9 +370,9 @@
 {% block content %}
 <h2>歡迎遊玩定向力遊戲(電腦模式)!</h2>
 <h3>
-    <div style="font-size:150%;" id="IntroduceText"> 遊戲提示:請依照這個順序，將色塊移動到下方</div>
+    <div style="font-size:150%;" id="IntroduceText"> 遊戲提示:記憶完下面的色塊後，就點擊按鈕開始遊戲</div>
     <audio controls autoplay style="visibility:hidden" id="Orientation2">
-        <source src="/media/music/Orientation2.mp3" type="audio/mpeg">
+        <source src="/media/music/Orientation_2.mp3" type="audio/mpeg">
     </audio>
 </h3>
 
@@ -381,12 +381,12 @@
     <div class="exemple" data-draggable-id=color style="background-color:{{color}}"> &nbsp;</div>
     {% endfor %}
 </div>
-<button class="prepareButton" id="readybtn" style="display:none;">準備好了</button>
+<button class="prepareButton" id="readybtn" >準備好了</button>
 <section class="after draggable-elements">
-    <i class="fas fa-cat draggable" draggable="true" style="color: #ff6384;" id="#ff6384"></i>
+    <i class="fas fa-cat draggable" draggable="true" style="color: #FF3300;" id="#FF3300"></i>
     <i class="fas fa-dog draggable" draggable="true" style="color: #36a2eb;" id="#36a2eb"></i>
     <i class="fas fa-dove draggable" draggable="true" style="color: #ffce56;" id="#ffce56"></i>
-    <i class="fas fa-fish draggable" draggable="true" style="color: #9966ff;" id="#9966ff"></i>
+    <i class="fas fa-fish draggable" draggable="true" style="color: #00CC33;" id="#00CC33"></i>
 </section>
 <br><br><br><br><br>
 <div class="after">
@@ -399,7 +399,6 @@
     </section>
 </div>
 <a href="/settlement/{{ pk }}/OrientationGame/"><button style="display:none" class="endButton">送出</button></a>
-<p id="countdown2">5</p>
 <p id="countdown" class="after">0</p>
 {% endblock %}
 
@@ -410,11 +409,13 @@
         var player = $("#Orientation2")[0];
         player.pause()
         player.play();
-        window.setInterval(countdown2, 1000);
-        timer2 = document.getElementById("countdown2");
-        function countdown2() {
-            timer2.innerHTML = timer2.innerHTML - 1;
-        }
+        
+        $(".prepareButton").click(function(){
+            $(".exemple").css("display", 'none');
+            $(".frame0").css("display", "none");
+            
+        });  
+        /*     
         setTimeout(function () {
             $(".exemple").css("display", 'none');
             $("")
@@ -422,7 +423,7 @@
             $("#countdown2").css("display", 'none');
             $(".frame0").css("display", "none")
             $("#readybtn").css("display", "").addClass("fadein")
-        }, 5000);//讓三張圖片出現五秒
+        }, 5000);//讓三張圖片出現五秒*/
         $("#readybtn").click(function () {
             $(".after").removeClass("after").addClass("fadein")
             $(this).css("display", "none");
