@@ -44,6 +44,7 @@ class GameMod(models.Model):
 class Orientation(models.Model):
     mod = models.ForeignKey(GameMod, on_delete=models.CASCADE)
     correct_rate = IntegerField()
+    memoryTime = IntegerField()
     costTime = IntegerField()
     add_time = models.DateTimeField(default=timezone.now)
     class Meta:

@@ -297,14 +297,23 @@
 </div>
 
 <button style="display:none" class="endButton"><a href="/settlement/{{ pk }}/OrientationGame/">送出</a></button>
+<p id="countdown0" class="memoryTime" style="display:none">0</p>
 <p id="countdown" class="after">0</p>
 {% endblock %}
 
 {% block javascript%}
 <script>
     $(document).ready(function () {
-
+        window.setInterval(countdown0, 1000);
+        function countdown0(){
+            timer0.innerHTML = timer0.innerHTML - (-1);
+        }
+        timer0 = document.getElementById("countdown0");
+        var memoryTime;
         $(".prepareButton").click(function(){
+            memoryTime = $("#countdown0").text();
+            console.log(memoryTime)
+            clearInterval(timer0);
             $(".wrapper0").css("display", 'none');
             $("#countdown2").css("display", 'none');
             $(".after").removeClass("after").addClass("fadein")
@@ -498,6 +507,7 @@
                 data: {
                     "correct": correct,
                     "count_number": count_number,
+                    "memoryTime": memoryTime,
                 },
                 success: function () {
                 }

@@ -167,38 +167,6 @@ def SortTermMemoryGame(request, pk, n, gameName):
     print("test!!!", pic4_first, pic5_first)
     pic_change_total = [pic1_first, pic2_first, pic3_first, pic4_first, pic5_first]
     shuffle(pic_change_total)
-    
-    '''
-    picture = Sort_term_memory.objects.all()
-    top_number = picture.count()
-    first_list = []
-    for i in range(3):#選三張
-        id = random.randint(1, top_number) #1到最尾端隨機
-        while id in first_list:
-            id = random.randint(1, top_number)
-        first_list.append(id)
-    first_list_copy = list(first_list)#複製list
-    for i in range(2):#補齊5張
-        id = random.randint(1, top_number)
-        while id in first_list or id in first_list_copy:#如果id有存在一開始要顯示的list，或現在這個補5張的有重複
-            id = random.randint(1, top_number)
-        first_list_copy.append(id)
-        first_list_copy.append(id)
-    
-    pic1_first = picture.get(number = first_list[0])
-    pic2_first = picture.get(number = first_list[1])
-    pic3_first = picture.get(number = first_list[2])#一開始那三張
-    pic_first_total = [pic1_first, pic2_first, pic3_first]
-    pic1_change = picture.get(number = first_list_copy[0])
-    pic2_change = picture.get(number = first_list_copy[1])
-    pic3_change = picture.get(number = first_list_copy[2])
-    pic4_change = picture.get(number = first_list_copy[3])
-    pic5_change = picture.get(number = first_list_copy[4])#後面要呈現的五張
-
-    pic_change_total = [pic1_change, pic2_change, pic3_change, pic4_change, pic5_change]
-    shuffle(pic_change_total)
-    '''
-    
     n += 1
     if n == 2:
         return redirect('/settlement/'+str(pk)+'/'+"SortTermMemoryGame/")
@@ -293,7 +261,7 @@ def settlement(request, pk, gameMod):
     #try:
     tmp = Userdata.objects.get(pk=pk)
     gameModData = GameMod.objects.get(username=tmp, game_mod=gameMod)
-    count = 0;
+    count = 0
     #短期記憶的設計要等到資料都有了才寫進資料庫，故在結算時才將資料寫入
     if gameMod == "SortTermMemoryGame":
         sorttermmemory = Sort_term_memory.objects.filter(mod=gameModData).first()
@@ -343,6 +311,7 @@ def OrientationAjax(request, pk):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         correct = int(request.GET.get("correct"))
         costtime = int(request.GET.get("count_number"))
+        memoryTime = int(request.GET.get("memoryTime"))
         userdata = Userdata.objects.get(pk=pk)
         gamemod = GameMod.objects.get(username=userdata, game_mod="OrientationGame")
         score = 0
@@ -355,7 +324,8 @@ def OrientationAjax(request, pk):
         elif correct == 4:
             score = 100
         
-        newOrientationData = Orientation.objects.create(mod=gamemod, correct_rate=score, costTime=costtime)
+        newOrientationData = Orientation.objects.create(mod=gamemod, correct_rate=score, memoryTime=memoryTime,
+        costTime=costtime)
         newOrientationData.save()
         return JsonResponse(correct, safe=False)
 

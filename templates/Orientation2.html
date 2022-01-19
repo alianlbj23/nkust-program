@@ -399,6 +399,7 @@
     </section>
 </div>
 <a href="/settlement/{{ pk }}/OrientationGame/"><button style="display:none" class="endButton">送出</button></a>
+<p id="countdown0" class="memoryTime" style="display:none">0</p>
 <p id="countdown" class="after">0</p>
 {% endblock %}
 
@@ -409,8 +410,16 @@
         var player = $("#Orientation2")[0];
         player.pause()
         player.play();
-        
+        window.setInterval(countdown0, 1000);
+        function countdown0(){
+            timer0.innerHTML = timer0.innerHTML - (-1);
+        }
+        timer0 = document.getElementById("countdown0");
+        var memoryTime;
         $(".prepareButton").click(function(){
+            memoryTime = $("#countdown0").text();
+            console.log(memoryTime)
+            clearInterval(timer0);
             $(".exemple").css("display", 'none');
             $(".frame0").css("display", "none");
             
@@ -507,6 +516,7 @@
                 data: {
                     "correct": correct,
                     "count_number": count_number,
+                    "memoryTime": memoryTime,
                 },
                 success: function () {
 
