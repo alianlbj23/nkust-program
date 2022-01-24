@@ -17,7 +17,6 @@ class Userdata(models.Model):
         return self.name
 
 
-
 class game(models.Model):
     title = models.CharField(max_length=50)
     text = models.TextField()
@@ -62,25 +61,10 @@ class Attention(models.Model):
         return str(self.correct_rate)
 
 #這兩個都是短期記憶用的
-'''
-class Sort_term_memory(models.Model):
-    mod = models.ForeignKey(GameMod, on_delete=models.CASCADE)
-    one = models.BooleanField()
-    add_time = models.DateTimeField(default=timezone.now)
-    class Meta:
-        ordering = ["-add_time"]
-    def __str__(self):
-        return str(self.add_time)
-
-class TimeStore(models.Model):
-    sort_term_memory = models.ForeignKey(Sort_term_memory, on_delete=models.CASCADE)
-    time_one = models.CharField(max_length=30)
-    def __str__(self):
-        return str(self.sort_term_memory)
-'''
 class Sort_term_memory(models.Model):
     mod = models.ForeignKey(GameMod, on_delete=models.CASCADE)
     correct_rate = models.IntegerField()
+    memoryTime = IntegerField()
     costTime = IntegerField()
     add_time = models.DateTimeField(default=timezone.now)
     class Meta:

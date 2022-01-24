@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*',]
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'robot.apps.RobotConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chat', 
+    
 ]
 
 MIDDLEWARE = [
@@ -53,6 +56,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mblog.urls'
+ASGI_APPLICATION = "mblog.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}       
 
 TEMPLATES = [
     {
@@ -71,7 +81,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mblog.wsgi.application'
-
+ASGI_APPLICATION = 'mblog.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

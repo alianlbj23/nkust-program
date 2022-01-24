@@ -6,27 +6,26 @@
     $(document).ready(function(){
         var pic_answer = []
         var pic_choice = []
+        var player = $("#sortTerm2")[0];
+        player.pause()
+        player.play();
         var user_name = '{{ name }}'
         pic_answer.push($("#pic1").attr('src'))
         pic_answer.push($("#pic2").attr('src'))
         pic_answer.push($("#pic3").attr('src')) //記住一開始三張的url
         console.log($("#pic1").attr('src'), $("#pic2").attr('src'), $("#pic3").attr('src'))
-        window.setInterval(countdown2, 1000);
-        timer2 = document.getElementById("countdown2");
-        function countdown2(){
-            timer2.innerHTML = timer2.innerHTML - 1;
+        window.setInterval(countdown0, 1000);
+        function countdown0(){
+            timer0.innerHTML = timer0.innerHTML - (-1);
         }
-        setTimeout(function(){
+        timer0 = document.getElementById("countdown0");
+        var memoryTime;
+        $("#readybtn").click(function(){
+            memoryTime = $("#countdown0").text();
+            clearInterval(timer0);
             $("#pic1").css("display", 'none');
             $("#pic2").css("display", 'none');
             $("#pic3").css("display", 'none');
-            clearInterval(timer2);
-            $("#countdown2").css("display", 'none');
-            $("#readybtn").css("display", "").addClass("fadein")
-            var player = $("#sortTerm2")[0];
-            player.play();
-        }, 5000);//讓三張圖片出現五秒
-        $("#readybtn").click(function(){
             $(".after").removeClass("after").addClass("fadein")
             $(this).css("display", "none");
             window.setInterval(countdown, 1000);
@@ -73,6 +72,7 @@
                     "c4": pic_choice[3],
                     "c5": pic_choice[4],
                     "count": count_number,
+                    "memoryTime": memoryTime,
                 },
                 success: function(){
                 }
@@ -265,13 +265,12 @@
             <div class="col-9 col-md-4 first image-1x1" ><img  src="{{pic2_first}}" id="pic2"></div>
             <div class="col-9 col-md-4 first image-1x1" ><img  src="{{pic3_first}}" id="pic3"></div>
         </div>
-        <div id="readybtn" style="display:none">
-            
-        <button class="prepareButton" >準備好了</button>
-        <p style="font-size:300%;" >請選出剛剛出現的那三張圖片，準備好了就點擊按鈕</p>
-        <audio style="visibility:hidden" id="sortTerm2">
-            <source src="/media/music/sortTerm_2.mp3" type="audio/mpeg">
-        </audio>
+        <div id="readybtn" >
+            <button class="prepareButton" >準備好了</button>
+            <p style="font-size:300%;" >請選出這三張圖片，準備好了就點擊按鈕</p>
+            <audio style="visibility:hidden" id="sortTerm2">
+                <source src="/media/music/sortTerm_2.mp3" type="audio/mpeg">
+            </audio>
         </div>
         <div class="row">   
             {% for pic_change in pic_change_total %}
@@ -285,7 +284,7 @@
         <br>
         <a href="/settlement/{{ pk }}/SortTermMemoryGame/"<button id="nextbtn" class="after okButton">送出</button></a>
         <br><br>
-        <p id="countdown2">5</p>
+        <p id="countdown0" class="memoryTime" style="display:none">0</p>
         <p id="countdown" class="after">0</p>
     <!---->
     </div>

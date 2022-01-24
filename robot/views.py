@@ -182,6 +182,7 @@ def sort_term_memory_ajax(request, pk):
         answer2 = request.GET.get('answer2')
         answer3 = request.GET.get('answer3')
         count = request.GET.get('count')
+        memoryTime = request.GET.get('memoryTime')
         c1 = request.GET.get('c1')
         c2 = request.GET.get('c2')
         c3 = request.GET.get('c3')
@@ -195,7 +196,6 @@ def sort_term_memory_ajax(request, pk):
         for i in c_total: #確認有沒有全對
             if i in ans_total:
                 key += 1
-        
         if key == 1:
             score = 33
         elif key == 2:
@@ -208,7 +208,8 @@ def sort_term_memory_ajax(request, pk):
         
         gamemod = GameMod.objects.get(username=userdata, game_mod="SortTermMemoryGame")
         
-        New = Sort_term_memory.objects.create(mod=gamemod, correct_rate=score, costTime=int(count))
+        New = Sort_term_memory.objects.create(mod=gamemod, correct_rate=score, costTime=int(count),
+        memoryTime=memoryTime)
         New.save()
 
         
@@ -400,3 +401,4 @@ def historyChart(request, pk, gameName, year, month, day):
     
     
     return render(request, 'historyChart.html', locals())
+

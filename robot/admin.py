@@ -24,15 +24,13 @@ admin.site.register(GameMod, GameModAdmin)
 #admin.site.register(Sort_term_memory)
 
 class Sort_term_memoryAdmin(admin.ModelAdmin):
-    list_display = ['mod', 'correct_rate', "costTime", "add_time"]
+    list_display = ['mod', 'correct_rate',"memoryTime","costTime", "add_time"]
 admin.site.register(Sort_term_memory, Sort_term_memoryAdmin)
-
-
 
 class AttentionAdmin(admin.ModelAdmin):
     list_display = ['mod','correct_rate', "add_time"]
 admin.site.register(Attention, AttentionAdmin)
 
 class OrientationAdmin(admin.ModelAdmin):
-    list_display = ['mod','correct_rate', "costTime","add_time"]
+    list_display = ['mod','correct_rate', "memoryTime","costTime","add_time"]
 admin.site.register(Orientation, OrientationAdmin)
