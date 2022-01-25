@@ -89,9 +89,9 @@ ASGI_APPLICATION = 'mblog.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ch07www',
+        'NAME': 'robotdb',
         'USER': 'root',
-        'PASSWORD': '@asdfg123@',
+        'PASSWORD': '1234',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {

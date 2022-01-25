@@ -34,3 +34,7 @@ admin.site.register(Attention, AttentionAdmin)
 class OrientationAdmin(admin.ModelAdmin):
     list_display = ['mod','correct_rate', "memoryTime","costTime","add_time"]
 admin.site.register(Orientation, OrientationAdmin)
+
+class SonglistAdmin(admin.ModelAdmin):
+    list_display = ['url', 'name']
+admin.site.register(Songlist, SonglistAdmin)

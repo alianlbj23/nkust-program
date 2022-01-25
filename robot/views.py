@@ -28,7 +28,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mblog.settings')
 django.setup()
 from time import time
 
-#from django import forms
 
 ans_register = list() #紀錄對或錯
 timer_register = list()#紀錄時間
@@ -294,8 +293,8 @@ def introduction(request, pk, gameName):
     if gameName == "定向力遊戲":
         title = "OrientationGame"
         key = 3
-    if gameName == "懷舊遊戲":
-        title = "OrientationGame"
+    if gameName == "老歌懷舊搶答遊戲":
+        title = "NostalgiaGame"
         key = 4
     n = 0
     return render(request, 'introduction.html', locals())
@@ -352,6 +351,7 @@ def NostalgiaGame(request, pk, n, gameName):
     if new.count() == 0:#如果玩家沒有注意力的資料這裡新增一個
         new = GameMod.objects.create(username = tmp, game_mod="OrientationGame")
         new.save()
+    
     return render(request, 'NostalgiaGame.html', locals())
 
 def historyEnterPage(request, pk):

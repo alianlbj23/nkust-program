@@ -73,4 +73,10 @@ class Sort_term_memory(models.Model):
         return str(self.add_time)
 #_____________________________________________________________
 
+class Songlist(models.Model):
+    url = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
+    add_time = models.DateTimeField(default=timezone.now)
+    class Meta:
+        ordering = ["-add_time"]
 # Create your models here.
