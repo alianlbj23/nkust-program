@@ -258,6 +258,7 @@ def AttentionGameAjax(request, pk):
 
 
 
+
 def settlement(request, pk, gameMod):
     #try:
     tmp = Userdata.objects.get(pk=pk)
@@ -293,6 +294,9 @@ def introduction(request, pk, gameName):
     if gameName == "定向力遊戲":
         title = "OrientationGame"
         key = 3
+    if gameName == "懷舊遊戲":
+        title = "OrientationGame"
+        key = 4
     n = 0
     return render(request, 'introduction.html', locals())
 
@@ -341,6 +345,14 @@ def OrientationPadGame(request, pk, n, gameName):
     colors = ["#FF3300", "#36a2eb", "#ffce56", "#00CC33"]
     return render(request, 'OrientationPad2.html', locals())
 # Create your views here.
+
+def NostalgiaGame(request, pk, n, gameName):
+    tmp = Userdata.objects.get(pk=pk)
+    new = GameMod.objects.filter(username = tmp, game_mod="NostalgiaGame")
+    if new.count() == 0:#如果玩家沒有注意力的資料這裡新增一個
+        new = GameMod.objects.create(username = tmp, game_mod="OrientationGame")
+        new.save()
+    return render(request, 'NostalgiaGame.html', locals())
 
 def historyEnterPage(request, pk):
     return render(request, 'historyEnterPage.html', locals())

@@ -36,6 +36,7 @@ urlpatterns = [
     path('OrientationGame/<int:pk>/<int:n>/<str:gameName>/',OrientationGame),
     path('OrientationAjax/<int:pk>/',OrientationAjax),
     path('OrientationPadGame/<int:pk>/<int:n>/<str:gameName>/',OrientationPadGame),
+    path('NostalgiaGame/<int:pk>/<int:n>/<str:gameName>/', NostalgiaGame),
     path('historyEnterPage/<int:pk>/', historyEnterPage),
     path("historyYear/<int:pk>/<str:gameName>/", historyYear),
     path("historyMonth/<int:pk>/<str:gameName>/<int:year>/", historyMonth),

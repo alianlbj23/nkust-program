@@ -295,7 +295,7 @@ transform: translateY(4px);
 
 <h2>歡迎遊玩{{ game_data.title }}!<br><p>以下是本遊戲的玩法介紹:</p></h2>
 <div style="margin:100px;text-align:center">
-  {% if game_data.title == "注意力遊戲"%}
+  {% if game_data.title == "注意力遊戲" %}
     <audio controls autoplay style="visibility:hidden" id="attention">
       <source src="/media/music/attention.mp3" type="audio/mpeg">
     </audio>
@@ -304,16 +304,18 @@ transform: translateY(4px);
       (每回只能夠點擊三次)
     </div>
     
-  {% elif game_data.title == "短期記憶遊戲"%}
+  {% elif gameName == "短期記憶遊戲"%}
     <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
     <audio controls autoplay style="visibility:hidden" id="sortTerm">
       <source src="/media/music/sortTerm_1.mp3" type="audio/mpeg">
     </audio>
-  {% else %}
+  {% elif gameName == "定向力遊戲"%}
     <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
     <audio controls autoplay style="visibility:hidden" id="Orientation">
       <source src="/media/music/Orientation_1.mp3" type="audio/mpeg">
     </audio>
+  {% elif gameName == "老歌懷舊搶答遊戲"%}  
+    <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
   {% endif %}
 </div>
 

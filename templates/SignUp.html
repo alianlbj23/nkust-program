@@ -190,7 +190,7 @@
     <div class="alert alert-warning">{{ message }}</div>
 {% endif %}
 
-  <label for="cameraFileInput">
+<label for="cameraFileInput">
       <span class="button4">開啟相機</span>
       <!-- The hidden file `input` for opening the native camera -->
       <input
@@ -223,33 +223,53 @@
 
 
 <script>
+var flag = 0
 var obj
 var imgSrc = " "
-document
-  .getElementById("cameraFileInput")
-  .addEventListener("change", function () {
-    document
-      .getElementById("pictureFromCamera")
-      .setAttribute("src", window.URL.createObjectURL(this.files[0]));
-      $("#PicDownload").removeAttr("style")
-      
-      obj = document.getElementById("pictureFromCamera");
-      imgSrc = obj.getAttribute("src");
-      block_capture()
-  });
-  
-  
-  
-//下載圖片
-function block_capture() {
-            html2canvas(document.querySelector("#pictureFromCamera")).then(function (canvas) {
-                a = document.createElement('a');
-                a.href = canvas.toDataURL("image/jpeg", 0.92).replace("image/jpeg", "image/octet-stream");
-                a.download = imgSrc+'.jpg';
-                a.click();
-            });
-        }
+/*
+if(flag == 1){
+    var obj = document.getElementById("pictureFromCamera");
+    var imgParent = obj.parentNode;
+    imgParent.removeChild(obj);
+}*/
 
+
+document
+
+    .getElementById("cameraFileInput")
+    .addEventListener("change", function () {
+    check(flag) //不加這行的話，照片會重複下載
+    document
+        .getElementById("pictureFromCamera")
+        .setAttribute("src", window.URL.createObjectURL(this.files[0]));
+        $("#PicDownload").removeAttr("style")
+        obj = document.getElementById("pictureFromCamera");
+        imgSrc = obj.getAttribute("src");
+        
+        
+        block_capture()
+});
+
+//下載圖片
+
+function block_capture() {
+    flag = 1
+    html2canvas(document.querySelector("#pictureFromCamera")).then(function (canvas) {
+        a = document.createElement('a');
+        a.href = canvas.toDataURL("image/jpeg", 0.92).replace("image/jpeg", "image/octet-stream");
+        console.log("a!!!!!: ", a)
+        a.download = imgSrc+'.jpg';
+        a.click();
+        
+    });
+}
+function check(flag){
+    if(flag==1){
+        console.log("Hello")
+        $("#pictureFromCamera").remove()
+        $("#capture").append("<img id='pictureFromCamera' />")
+    }
+}
 </script>
 
 
