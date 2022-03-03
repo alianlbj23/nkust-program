@@ -6,3 +6,6 @@ def lobby(request, pk):
     individual = Userdata.objects.get(pk=pk)
     return render(request, 'chat/test.html', locals())
 
+def game(request, pk):
+    individual = Userdata.objects.get(pk=pk)
+    return render(request, 'chat/game.html', locals())
