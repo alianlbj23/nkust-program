@@ -5,52 +5,62 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Lobby</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <h1>Lets chat!</h1>
     
-    <form id="form">
+    <button id="btn">click</button>
+    {% comment %} <form id="form">
         <input type="checkbox" name="check"/>
-    </form>
+    </form> {% endcomment %}
 
-    <div id="messages"></div>
-
+    <div id="messages">0/0</div>
+    
     <script type="text/javascript">
         var count = 0;
         var people = 0
+        var readyPeople = 0
         var selfFlag = 0;
         var url = `ws://${window.location.host}/ws/socket-server/`
         console.log(url)
         var chatSocket = new WebSocket(url)
         //var chatSocket = new WebSocket('ws://localhost:8000/ws/socket-server/')
+        chatSocket.onopen  = function(e){
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople
+            }))
+        }
         chatSocket.onmessage = function(e){
+            //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
             let data = JSON.parse(e.data)
-            console.log('Data:', data)
-
+            console.log('Data:', data.message)
+            
+            if(data.type === 'chat'){
+                /*
+                let messages = document.getElementById('messages')
+                messages.insertAdjacentHTML('beforeend', `<div>
+                                        <p>${data.message}/0</p>
+                                    </div>`)*/
+                $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople}</span></p>`)
+            }
         }
 
-        let form = document.getElementById('form')
-        form.addEventListener('click', (e)=> {
+        let btn = document.getElementById('btn')
+        btn.addEventListener('click', (e)=> {
             
             if(selfFlag==0){//確認是否打勾狀態
                 selfFlag = 1
-                count += 1
+                
+                readyPeople = $("#readyPeople").text()
+                readyPeople = parseInt(readyPeople)
+                readyPeople += 1
+                readyPeople = readyPeople.toString();
                 chatSocket.send(JSON.stringify({
-                    'count':count
+                    'readyPeople':readyPeople
                 }))
             }
-
-            else{
-                selfFlag = 0
-                count -= 1
-                chatSocket.send(JSON.stringify({
-                    'count':count
-                }))
-            }
-            
         })
-        console.log("count: ", count)
     </script>
 </body>
 </html>
