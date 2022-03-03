@@ -8,7 +8,7 @@ from django import forms
 from robot import models, forms
 from django.shortcuts import redirect
 from .models import *
-import pandas as pd
+# import pandas as pd
 from django.conf import settings
 #處理ubuntu編碼問題
 #coding=utf-8
@@ -348,7 +348,7 @@ def OrientationPadGame(request, pk, n, gameName):
 def NostalgiaGame(request, pk, n, gameName):
     tmp = Userdata.objects.get(pk=pk)
     new = GameMod.objects.filter(username = tmp, game_mod="NostalgiaGame")
-    if new.count() == 0:#如果玩家沒有注意力的資料這裡新增一個
+    if new.count() == 0:#如果玩家沒有懷舊的資料這裡新增一個
         new = GameMod.objects.create(username = tmp, game_mod="OrientationGame")
         new.save()
     
@@ -398,7 +398,7 @@ def historyChart(request, pk, gameName, year, month, day):
             totalData = Orientation.objects.filter(mod=gamemode)
             totalData = totalData.filter(add_time__month=month,add_time__day=day).order_by("add_time")
 
-    elif year != 0 and month != 0 and day == 0:
+    elif year != 0 and month != 0 and day == 0: #找當月的
         title = str(year)+"年"+str(month)+"月"
         if key == 1:
             totalData = Sort_term_memory.objects.filter(mod=gamemode)

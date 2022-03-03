@@ -34,7 +34,9 @@ class ChatConsumer(WebsocketConsumer):
         }))
 '''
 global count
+global readyPeople
 count = 0
+readyPeople = 0
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         global count
@@ -61,20 +63,25 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['count']
+        print("test!!!!!!!!!!!!!",text_data_json)
+        readyPeople = int(text_data_json['readyPeople'])
+        #readyPeopleNumber = text_data_json['readyPeopleNumber']
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type':'chat_message',
-                'message':message
+                'count':count,
+                'readyPeople':readyPeople,
+                #'readyPeopleNumber':readyPeopleNumber,
             }
         )
 
     def chat_message(self, event):
-        message = event['message']
-        
+        #message = event['readyPeopleNumber']
+        readyPeople = event['readyPeople']
         self.send(text_data=json.dumps({
             'type':'chat',
-            'message':message
+            'count':count,
+            'readyPeople':readyPeople,
+            #'readyPeopleNumber':readyPeopleNumber,
         }))
-    
