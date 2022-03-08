@@ -117,7 +117,15 @@
         opacity: 1;
         text-align: left;
 }
+.ml2 {
+  font-weight: 900;
+  font-size: 3.5em;
+}
 
+.ml2 .letter {
+  display: inline-block;
+  line-height: 1em;
+}
 </style>
 {% endblock%}
 
@@ -126,22 +134,27 @@
 
 
 
-{% if request.user.is_authenticated %}
-    <p>管理者模式</p>
-{% endif %}
+
 
 <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
+            {% if request.user.is_authenticated %}
+            <h1 class="ml2">管理者模式</h1>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+            {% else %}
             <li class="nav-item active">
                 <span class="v13_58" ><img src="/media/image/home.png" width="60" height="60">登入畫面</span>
             </li>
-            
+            {% endif %}
         </ul>
     </div>
     
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                
+            {% endif %}
             <span class="v13_23"><img src="/media/image/user.png" width="60" height="65">
                 <a href='/Signup/'><button class="button3">註冊</button></a>
             </span>
@@ -182,7 +195,25 @@
 
 {% block javascript %} 
 <script>
+    var textWrapper = document.querySelector('.ml2');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: false})
+  .add({
+    targets: '.ml2 .letter',
+    scale: [4,1],
+    opacity: [0,1],
+    translateZ: 0,
+    easing: "easeOutExpo",
+    duration: 950,
+    delay: (el, i) => 70*i
+  }).add({
+    targets: '.ml2',
     
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000
+  });
     $("div #showWarringBox").click(function(){
         swal({
     title: "確定要刪除使用者?",

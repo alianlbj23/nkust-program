@@ -10,10 +10,10 @@
 <body>
     <h1>Lets chat!</h1>
     
-    <button id="btn">click</button>
-    {% comment %} <form id="form">
+    <!-- <button id="btn">click</button> -->
+    <form id="form">
         <input type="checkbox" name="check"/>
-    </form> {% endcomment %}
+    </form> 
 
     <div id="messages">0/0</div>
     
@@ -34,7 +34,7 @@
         chatSocket.onmessage = function(e){
             //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
             let data = JSON.parse(e.data)
-            console.log('Data:', data.message)
+            //console.log('Data:', data.message)
             
             if(data.type === 'chat'){
                 /*
@@ -46,8 +46,8 @@
             }
         }
 
-        let btn = document.getElementById('btn')
-        btn.addEventListener('click', (e)=> {
+        let form = document.getElementById('form')
+        form.addEventListener('click', (e)=> {
             
             if(selfFlag==0){//確認是否打勾狀態
                 selfFlag = 1
@@ -57,7 +57,8 @@
                 readyPeople += 1
                 readyPeople = readyPeople.toString();
                 chatSocket.send(JSON.stringify({
-                    'readyPeople':readyPeople
+                    'readyPeople':readyPeople,
+                    'selfFlag':selfFlag
                 }))
             }
         })
