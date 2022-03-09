@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+
+{% block title %}遊戲介紹{% endblock %}
+
+{% block css %}
+{% load static %}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'ready.css' %}">
+  <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <span class="v13_58" ><img src="/media/image/presentation.png" width="60" height="60">遊戲介紹</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <a href="/index/{{ pk }}/">
+              <img src="/media/image/logout.png" width="60" height="60">
+              <button  class="button5">&nbsp;&nbsp;上一頁</button>
+              </a>
+          </li>
+      </ul>
+  </div>
+</nav>
+
+<h2>歡迎遊玩老歌懷舊搶答<br><p>以下是本遊戲的玩法介紹:</p></h2>
+<div style="margin:30px;text-align:center">
+    <p style="font-size:300%;" id="IntroduceText"> 
+    等一下會撥放歌曲，請根據歌曲選出正確的名稱。
+    準備完成後請點擊"準備完成"
+    </p>
+</div>
+
+
+
+<ul class="nav nav-pills nav-fill" style="margin:50px;text-align:center">
+    <button class="readyBtn" id="readyBtn">準備完成</button>
+    <div id="messages">0/0</div>
+    <li class="nav-item">&nbsp;</li>
+    <li class="nav-item">
+    
+    <a href = '/{{ title }}/{{ pk }}/{{ n }}/{{ gameName }}/'><button class="starBtn">開始遊戲</button></a>
+    
+    </li>
+
+</ul>
+
+<script type="text/javascript">
+    var count = 0;
+    var people = 0
+    var readyPeople = 0
+    var selfFlag = 0;
+    var url = `ws://${window.location.host}/ws/socket-server/`
+    console.log(url)
+    var chatSocket = new WebSocket(url)
+    //var chatSocket = new WebSocket('ws://localhost:8000/ws/socket-server/')
+    chatSocket.onopen  = function(e){
+        chatSocket.send(JSON.stringify({
+            'readyPeople':readyPeople
+        }))
+    }
+    chatSocket.onmessage = function(e){
+        //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
+        let data = JSON.parse(e.data)
+        //console.log('Data:', data.message)
+        
+        if(data.type === 'chat'){
+            /*
+            let messages = document.getElementById('messages')
+            messages.insertAdjacentHTML('beforeend', `<div>
+                                    <p>${data.message}/0</p>
+                                </div>`)*/
+            $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
+        }
+    }
+
+    let form = document.getElementById('readyBtn')
+    form.addEventListener('click', (e)=> {
+        $("#readyBtn").attr("disabled", true);
+        if(selfFlag==0){//確認是否打勾狀態
+            selfFlag = 1
+            /*
+            readyPeople = $("#readyPeople").text()
+            readyPeople = parseInt(readyPeople)
+            readyPeople += 1
+            readyPeople = readyPeople.toString();
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople,
+                'selfFlag':selfFlag
+            }))*/
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople,
+                'selfFlag':selfFlag
+            }))
+        }
+    })
+</script>
+
+    
+{% endblock %}

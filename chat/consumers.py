@@ -75,9 +75,9 @@ class ChatConsumer(WebsocketConsumer):
         }))
 '''
 global count
-global readyPeople
+global readyPeople_in
 count = 0
-readyPeople = 0
+readyPeople_in = 0
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         global count
@@ -104,13 +104,13 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        print("test!!!!!!!!!!!!!",text_data_json)
+        
         readyPeople = int(text_data_json['readyPeople'])
         try:
-            selfFlag = text_data_json['selfFlag']
-            print("[STARTING] server is starting...")
-            start()
-
+            selfFlag = int(text_data_json['selfFlag'])
+            global readyPeople_in
+            readyPeople_in += 1
+            print("test!!!!!!!!!!!!!",readyPeople_in)
         except:
             pass
         #readyPeopleNumber = text_data_json['readyPeopleNumber']
@@ -120,16 +120,19 @@ class ChatConsumer(WebsocketConsumer):
                 'type':'chat_message',
                 'count':count,
                 'readyPeople':readyPeople,
+                'readyPeople_in':readyPeople_in,
                 #'readyPeopleNumber':readyPeopleNumber,
             }
         )
 
     def chat_message(self, event):
         #message = event['readyPeopleNumber']
+        global readyPeople_in
         readyPeople = event['readyPeople']
         self.send(text_data=json.dumps({
             'type':'chat',
             'count':count,
             'readyPeople':readyPeople,
+            'readyPeople_in':readyPeople_in,
             #'readyPeopleNumber':readyPeopleNumber,
         }))
