@@ -18,14 +18,14 @@
     </div>
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-      <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-              <a href="/index/{{ pk }}/">
-              <img src="/media/image/logout.png" width="60" height="60">
-              <button  class="button5">&nbsp;&nbsp;上一頁</button>
-              </a>
-          </li>
-      </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="/index/{{ pk }}/">
+                <img src="/media/image/logout.png" width="60" height="60">
+                <button  class="button5">&nbsp;&nbsp;上一頁</button>
+                </a>
+            </li>
+        </ul>
   </div>
 </nav>
 
@@ -45,7 +45,7 @@
     <li class="nav-item">&nbsp;</li>
     <li class="nav-item">
     
-    <a href = '/{{ title }}/{{ pk }}/{{ n }}/{{ gameName }}/'><button class="starBtn">開始遊戲</button></a>
+    {% comment %} <a href = '/{{ title }}/{{ pk }}/{{ n }}/{{ gameName }}/'><button class="starBtn">開始遊戲</button></a> {% endcomment %}
     
     </li>
 
@@ -83,6 +83,7 @@
     let form = document.getElementById('readyBtn')
     form.addEventListener('click', (e)=> {
         $("#readyBtn").attr("disabled", true);
+        $("#readyBtn").text("等待中~");
         if(selfFlag==0){//確認是否打勾狀態
             selfFlag = 1
             /*
