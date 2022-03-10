@@ -2,22 +2,27 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from robot.models import *
+
+
+#--------------------------------------------------------------------------------
 from email.header import Header
 import socket
 import threading
 from turtle import Turtle
-
 HEADER = 64
 SERVER = socket.gethostbyname(socket.gethostname()) #自動讀取server端IPv4網路IP
 PORT = 9559
 ADDR = (SERVER, PORT) #將IP跟PORT放入ADDR中
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT" #設置連接失敗訊息
+
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  #socket.AF_INET	於伺服器與伺服器之間進行串接
                                                             #socket.SOCK_STREAM	使用TCP(資料流)的方式提供可靠、雙向、串流的通信頻道
 server.bind(ADDR) #bind函式，用於伺服器端需監聽的IP位址和Port。
 
 def handle_client(conn, addr):
+    global readyPeople_in
     print(f"[NEW CONNECTIONS] {addr} connected.") #print(f+"string")運算式嵌入在字串常數中
 
     connected = True
@@ -28,21 +33,24 @@ def handle_client(conn, addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             if msg == DISCONNECT_MESSAGE:
                 connected = False
-
-            print(f"[{addr}] {msg}")
+            print("收到訊息")
+            serverMessage = 'I\'m here!'
+            conn.send(serverMessage.encode())
+            
 def start():
-    key = 0
+    flag = 1
     server.listen()
     print(f"[LISTENING] Server is listening on {SERVER}")
-    while key==0:
-        key = 1
+    while flag:
         conn, addr = server.accept()
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
-        break
-        print("noBreak")
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() -1}") #顯示有幾比連線傳來的資料
-
+        serverMessage = 'I\'m here!'
+        # serverMessage = "test!!!!!!!!!!!!!!!!!!!!!!"
+        conn.send(serverMessage.encode())
+        flag = 0
+#--------------------------------------------------------------------------------server.py
 '''
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -110,7 +118,8 @@ class ChatConsumer(WebsocketConsumer):
             selfFlag = int(text_data_json['selfFlag'])
             global readyPeople_in
             readyPeople_in += 1
-            print("test!!!!!!!!!!!!!",readyPeople_in)
+            start()
+
         except:
             pass
         #readyPeopleNumber = text_data_json['readyPeopleNumber']
