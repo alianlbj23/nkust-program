@@ -69,7 +69,7 @@
         //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
         let data = JSON.parse(e.data)
         //console.log('Data:', data.message)
-        
+        console.log("EnterGameKey測試拉:", data.EnterGameKey)
         if(data.type === 'chat'){
             /*
             let messages = document.getElementById('messages')
@@ -77,7 +77,12 @@
                                     <p>${data.message}/0</p>
                                 </div>`)*/
             $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
-            console.log(data.flag2)
+            if(data.EnterGameKey==1){
+                chatSocket.send(JSON.stringify({
+                    'web':'/'
+                }))
+                window.location.href='/';
+            }
         }
     }
 
@@ -102,6 +107,17 @@
             }))
         }
     })
+
+    function timeout(){
+        var abc=0
+        window.setTimeout(function() {
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople,
+            }))
+        },1000);
+        setTimeout("timeout()", 1000);
+    }
+    timeout();
 </script>
 
     
