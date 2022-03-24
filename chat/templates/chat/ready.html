@@ -44,7 +44,7 @@
     <div id="messages">0/0</div>
     <li class="nav-item">&nbsp;</li>
     <li class="nav-item">
-    
+    <div id="hr"></div>
     {% comment %} <a href = '/{{ title }}/{{ pk }}/{{ n }}/{{ gameName }}/'><button class="starBtn">開始遊戲</button></a> {% endcomment %}
     
     </li>
@@ -56,6 +56,8 @@
     var people = 0
     var readyPeople = 0
     var selfFlag = 0;
+    // var number = {{pk}};
+    // console.log(number)
     var url = `ws://${window.location.host}/ws/socket-server/`
     console.log(url)
     var chatSocket = new WebSocket(url)
@@ -70,6 +72,9 @@
         let data = JSON.parse(e.data)
         //console.log('Data:', data.message)
         console.log("EnterGameKey測試拉:", data.EnterGameKey)
+        if(data.EnterGameKey==1){
+            window.location.href='/chat/game/{{pk}}/';
+        }
         if(data.type === 'chat'){
             /*
             let messages = document.getElementById('messages')
@@ -77,15 +82,8 @@
                                     <p>${data.message}/0</p>
                                 </div>`)*/
             $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
-            if(data.EnterGameKey==1){
-                chatSocket.send(JSON.stringify({
-                    'web':'/'
-                }))
-                window.location.href='/';
-            }
         }
     }
-
     let form = document.getElementById('readyBtn')
     form.addEventListener('click', (e)=> {
         $("#readyBtn").attr("disabled", true);

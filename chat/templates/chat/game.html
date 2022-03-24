@@ -7,5 +7,88 @@
 {% load static %}
 {% endblock %}
 {% block content %}
-<h1>Welcome</h1>
+<link rel="stylesheet" href="{% static 'ready.css' %}">
+<nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <span class="v13_58" ><img src="/media/image/presentation.png" width="60" height="60">遊戲介紹</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                
+            </li>
+        </ul>
+  </div>
+</nav>
+<div id="messages"></div>
+
+<script type="text/javascript">
+    var count = 0;
+    var people = 0
+    var readyPeople = 0
+    var selfFlag = 0;
+    var url = `ws://${window.location.host}/ws/game/`
+    console.log(url)
+    var chatSocket = new WebSocket(url)
+    //var chatSocket = new WebSocket('ws://localhost:8000/ws/socket-server/')
+    chatSocket.onopen  = function(e){
+        chatSocket.send(JSON.stringify({
+            'readyPeople':readyPeople
+        }))
+    }
+    chatSocket.onmessage = function(e){
+        //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
+        let data = JSON.parse(e.data)
+        //console.log('Data:', data.message)
+        console.log("EnterGameKey測試拉:", data.EnterGameKey)
+        if(data.EnterGameKey==1){
+            window.location.href='/chat/game/{{ pk}}/';
+        }
+        if(data.type === 'chat'){
+            /*
+            let messages = document.getElementById('messages')
+            messages.insertAdjacentHTML('beforeend', `<div>
+                                    <p>${data.message}/0</p>
+                                </div>`)*/
+            $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
+        }
+    }
+    let form = document.getElementById('readyBtn')
+    form.addEventListener('click', (e)=> {
+        $("#readyBtn").attr("disabled", true);
+        $("#readyBtn").text("等待中~");
+        if(selfFlag==0){//確認是否打勾狀態
+            selfFlag = 1
+            /*
+            readyPeople = $("#readyPeople").text()
+            readyPeople = parseInt(readyPeople)
+            readyPeople += 1
+            readyPeople = readyPeople.toString();
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople,
+                'selfFlag':selfFlag
+            }))*/
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople,
+                'selfFlag':selfFlag
+            }))
+        }
+    })
+
+    function timeout(){
+        var abc=0
+        window.setTimeout(function() {
+            chatSocket.send(JSON.stringify({
+                'readyPeople':readyPeople,
+            }))
+        },1000);
+        setTimeout("timeout()", 1000);
+    }
+    timeout();
+</script>
 {% endblock %}
