@@ -108,6 +108,7 @@ def start():
             #serverMessage = url
             conn.sendall(serverMessage.encode())
             EnterGameKey = 1
+
             
             
 
