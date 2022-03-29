@@ -64,9 +64,22 @@
     //var chatSocket = new WebSocket('ws://localhost:8000/ws/socket-server/')
     chatSocket.onopen  = function(e){
         chatSocket.send(JSON.stringify({
-            'readyPeople':readyPeople
+            'readyPeople':readyPeople,
         }))
     }
+
+    chatSocket.onclose  = function(e){
+        console.log("trig000!!!!!!!!!!!!!!!")
+        if(selfFlag==1){
+            console.log("trig!!!!!!!!!!!!!!!")
+            selfFlag = 3
+            chatSocket.send(JSON.stringify({
+                'selfFlag':selfFlag,
+            }))
+        }
+        }
+        
+
     chatSocket.onmessage = function(e){
         //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
         let data = JSON.parse(e.data)
@@ -90,15 +103,6 @@
         $("#readyBtn").text("等待中~");
         if(selfFlag==0){//確認是否打勾狀態
             selfFlag = 1
-            /*
-            readyPeople = $("#readyPeople").text()
-            readyPeople = parseInt(readyPeople)
-            readyPeople += 1
-            readyPeople = readyPeople.toString();
-            chatSocket.send(JSON.stringify({
-                'readyPeople':readyPeople,
-                'selfFlag':selfFlag
-            }))*/
             chatSocket.send(JSON.stringify({
                 'readyPeople':readyPeople,
                 'selfFlag':selfFlag

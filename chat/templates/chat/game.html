@@ -4,6 +4,44 @@
 {% block title %}遊戲介紹{% endblock %}
 
 {% block css %}
+<style>
+    .choice{
+        font-size: 120%;
+        width: 60%;
+        height: 50px;
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        line-height: 40px;
+        color: #fff;
+        background-color: #000;
+        transition: all .3s linear;
+        margin:auto;
+        margin-bottom:20px;
+    }
+    .choice:hover{
+        background-color: #666;
+    }
+
+    .disabled {
+        pointer-events: none;
+        font-size: 120%;
+        width: 60%;
+        height: 50px;
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        line-height: 40px;
+        color: #fff;
+        background-color: #000;
+        transition: all .3s linear;
+        margin:auto;
+        margin-bottom:20px;
+        opacity: 0.6;
+        cursor: default;
+    }
+    
+</style>
 {% load static %}
 {% endblock %}
 {% block content %}
@@ -12,7 +50,7 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <span class="v13_58" ><img src="/media/image/presentation.png" width="60" height="60">遊戲介紹</span>
+                <span class="v13_58" ><img src="/media/image/presentation.png" width="60" height="60">猜歌囉</span>
             </li>
         </ul>
     </div>
@@ -25,66 +63,57 @@
         </ul>
   </div>
 </nav>
+<div class="container">
+    <div class="row" id="topic">
+        {% comment %} <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div>
+        <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div>
+        <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div>
+        <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div> {% endcomment %}
+    </div>
+</div>
 <div id="messages"></div>
-
 <script type="text/javascript">
-    var count = 0;
-    var people = 0
-    var readyPeople = 0
-    var selfFlag = 0;
+    var goBack = 0
+    var pic_choice = []
+    var ans
     var url = `ws://${window.location.host}/ws/game/`
-    console.log(url)
     var chatSocket = new WebSocket(url)
-    //var chatSocket = new WebSocket('ws://localhost:8000/ws/socket-server/')
     chatSocket.onopen  = function(e){
         chatSocket.send(JSON.stringify({
-            'readyPeople':readyPeople
+            "goBack":goBack,
         }))
     }
     chatSocket.onmessage = function(e){
-        //$("#messages").append(`<p>${data.message}/${readyPoeple}</p>`)
         let data = JSON.parse(e.data)
-        //console.log('Data:', data.message)
-        console.log("EnterGameKey測試拉:", data.EnterGameKey)
-        if(data.EnterGameKey==1){
-            window.location.href='/chat/game/{{ pk}}/';
-        }
         if(data.type === 'chat'){
-            /*
-            let messages = document.getElementById('messages')
-            messages.insertAdjacentHTML('beforeend', `<div>
-                                    <p>${data.message}/0</p>
-                                </div>`)*/
-            $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
+            if(goBack==0){
+                goBack = 1;
+                ans = data.ans_number
+                console.log("ans", ans)
+                $("#topic").html(`
+                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice"  onclick="test1(0)">${data.choice0}</button></div>
+                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(1)">${data.choice1}</button></div>
+                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(2)">${data.choice2}</button></div>
+                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(3)">${data.choice3}</button></div>
+                `)
+            }
+            
         }
     }
-    let form = document.getElementById('readyBtn')
-    form.addEventListener('click', (e)=> {
-        $("#readyBtn").attr("disabled", true);
-        $("#readyBtn").text("等待中~");
-        if(selfFlag==0){//確認是否打勾狀態
-            selfFlag = 1
-            /*
-            readyPeople = $("#readyPeople").text()
-            readyPeople = parseInt(readyPeople)
-            readyPeople += 1
-            readyPeople = readyPeople.toString();
-            chatSocket.send(JSON.stringify({
-                'readyPeople':readyPeople,
-                'selfFlag':selfFlag
-            }))*/
-            chatSocket.send(JSON.stringify({
-                'readyPeople':readyPeople,
-                'selfFlag':selfFlag
-            }))
+
+
+    function test1(e){
+        $("button").removeClass("choice").addClass("disabled")
+        if(e==ans){
+            console.log("hello")
+            
         }
-    })
+    }
 
     function timeout(){
-        var abc=0
         window.setTimeout(function() {
             chatSocket.send(JSON.stringify({
-                'readyPeople':readyPeople,
+                'goBack':goBack,
             }))
         },1000);
         setTimeout("timeout()", 1000);

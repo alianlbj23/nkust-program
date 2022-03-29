@@ -1,3 +1,4 @@
+from ast import NotIn
 from cgi import test
 import json
 import os
@@ -67,12 +68,14 @@ from turtle import Turtle
 #--------------------------------------------------------------------------------server.py
 global EnterGameKey
 EnterGameKey = 0
+global ans_number
+ans_number = ''
 ans_list = list()
 def start():
     global EnterGameKey
     HOST = socket.gethostbyname(socket.gethostname())
-    PORT = 9559 #學校
-    #1PORT = 5050 #家裡
+    #PORT = 9559 #學校
+    PORT = 5050 #家裡
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((HOST, PORT))
     server.listen(40)
@@ -90,27 +93,41 @@ def start():
             serverMessage = str(count)+'/'+str(readyPeople_in)
             conn.sendall(serverMessage.encode())
         elif clientMessage == "EnterGame":
+            global ans_number
+            ans_list.clear()
+            ans_number = ''
             n_last = Songlist.objects.all().first()
             n_first = Songlist.objects.all().last()
-            #print("number",n_last.pk, n_last.pk)
-            for i in range(4):
-                while 1:
+            while 1:
+                pk = random.randint(n_first.pk,n_last.pk)
+                target = Songlist.objects.filter(pk=pk)
+                if target.count() != 0:
+                    break
+            print("pk", pk)
+            ans = Songlist.objects.filter(pk=pk)
+            ans_url = list(ans.values('url'))[0]['url']
+            ans_songName = list(ans.values('song_name'))[0]['song_name']#先處理答案在處理剩餘3個題目
+            ans_list.append(ans_songName)
+            for i in range(3):#處理剩餘題目
+                while 1:#直到這個pk是有東西且陣列中沒有
                     pk = random.randint(n_first.pk,n_last.pk)
-                    print(pk)
                     target = Songlist.objects.filter(pk=pk)
-                    if target.count() != 0:
+                    target_songName = list(target.values('song_name'))[0]['song_name']
+                    replace_check = target_songName in ans_list
+                    if target.count() != 0 and replace_check != True:
                         break
-                ans_list.append(pk)
-            ans = Songlist.objects.filter(pk=ans_list[0])
-            url =  list(ans.values('url'))[0]['url']
+                ans_list.append(target_songName)
             shuffle(ans_list)
-            serverMessage = url
-            #serverMessage = url
+            ans_number = ans_list.index(ans_songName)
+            print("[ans_songName]:", ans_songName)
+            print("[ans_number]", ans_number)
+            print("List:!!!!!!!!!!!!!!!!!!!",ans_list)
+            serverMessage = ans_url
             conn.sendall(serverMessage.encode())
             EnterGameKey = 1
+            
+            
 
-            
-            
 
 t = threading.Thread(target = start)
 t.start()
@@ -120,9 +137,10 @@ global readyPeople_in
 count = 0
 readyPeople_in = 0
 class ChatConsumer(WebsocketConsumer):
-    print("現在再ChatConsumer1!!!!!!!!")
+    
+    #print("WebsocketConsumer", WebsocketConsumer)
     def connect(self):
-        print("connect")
+        #print("connect")
         global count
         self.room_group_name = 'test'
         async_to_sync(self.channel_layer.group_add)(
@@ -137,35 +155,34 @@ class ChatConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         global count
-        print("goodbyte")
+        global readyPeople_in
+        #print("goodbyte")
         count-=1
         print("在現人數: ", count)
+        print("readyPeople_in", readyPeople_in)
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
         )
         
-    def receive(self, text_data):
+    def receive(self, text_data=None):
+        #print("text_data",text_data)
         global EnterGameKey
-        print("receive")
+        #print("self check", self)
         text_data_json = json.loads(text_data)
         global count
         readyPeople = int(text_data_json['readyPeople'])
+        #selfFlag = int(text_data_json['selfFlag'])
         try:#準備好的人數
-            selfFlag = int(text_data_json['selfFlag'])
             global readyPeople_in
+            selfFlag = int(text_data_json['selfFlag'])
+            if selfFlag == 3:
+                print("trig!!!!!!!!!!!!")
+                readyPeople_in -= 1
             readyPeople_in += 1
             print("readyPeople Number:", readyPeople_in)
         except:
             pass
-        # if EnterGameKey == 1:
-        #     async_to_sync(self.channel_layer.group_send)(
-        #         self.room_group_name,
-        #         {
-        #             'type':'chat_message',
-        #         }
-        #     )   
-        # else:
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
@@ -179,7 +196,8 @@ class ChatConsumer(WebsocketConsumer):
         )
     def chat_message(self, event):
         global EnterGameKey
-        print("broadcast")
+        #print("broadcast")
+        #print("event",event)
         #message = event['readyPeopleNumber']
         global readyPeople_in
         readyPeople = event['readyPeople']
@@ -190,7 +208,7 @@ class ChatConsumer(WebsocketConsumer):
             'readyPeople_in':readyPeople_in,
             'EnterGameKey':EnterGameKey,
         #'readyPeopleNumber':readyPeopleNumber,
-        }))
+        })) 
         if EnterGameKey==1:
             EnterGameKey = 0
         
@@ -199,65 +217,55 @@ class ChatConsumer2(WebsocketConsumer):
     def connect(self):
         print("connect")
         global count
-        self.room_group_name = 'test'
+        self.room_group_name = 'test2'
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
         )
-        test = self.channel_layer.groups.get('test', {}).items()
-        count+=1
-        print("在現人數: ", count)
+        test = self.channel_layer.groups.get('test2', {}).items()
+        
         
         self.accept()
 
     def disconnect(self, close_code):
-        global count
-        print("goodbyte")
-        count-=1
-        print("在現人數: ", count)
+        
+        
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
         )
         
     def receive(self, text_data):
-        
-        print("receive")
+        global ans_number
         text_data_json = json.loads(text_data)
-        global count
-        readyPeople = int(text_data_json['readyPeople'])
-        try:#準備好的人數
-            selfFlag = int(text_data_json['selfFlag'])
-            global readyPeople_in
-            readyPeople_in += 1
-            print("readyPeople Number:", readyPeople_in)
-        except:
-            pass
-       
+        goBack = text_data_json['goBack']
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type':'chat_message',
-                'count':count,
-                'readyPeople':readyPeople,
-                'readyPeople_in':readyPeople_in,
-                'EnterGameKey':EnterGameKey,
-                #'readyPeopleNumber':readyPeopleNumber,
+                'choice0':ans_list[0],
+                'choice1':ans_list[1],
+                'choice2':ans_list[2],
+                'choice3':ans_list[3],
+                'ans_number':ans_number,
+                'goBack':goBack,
             }
         )
     def chat_message(self, event):
-        print("!!!!!", self, event)
-        global EnterGameKey
-        print("broadcast")
-        #message = event['readyPeopleNumber']
-        global readyPeople_in
-        readyPeople = event['readyPeople']
-        EnterGameKey = event['EnterGameKey']
+        choice0 = event['choice0']
+        choice1 = event['choice1']
+        choice2 = event['choice2']
+        choice3 = event['choice3']
+        ans_number = event['ans_number']
+        goBack = event['goBack']
         self.send(text_data=json.dumps({
             'type':'chat',
-            'count':count,
-            'readyPeople_in':readyPeople_in,
-            'EnterGameKey':EnterGameKey,
+            'choice0':choice0,
+            'choice1':choice1,
+            'choice2':choice2,
+            'choice3':choice3,
+            'ans_number':ans_number,
+            'goBack':goBack,
         #'readyPeopleNumber':readyPeopleNumber,
         }))
     
