@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 
-{% block title %}遊戲介紹{% endblock %}
+{% block title %}遊戲開始{% endblock %}
 
 {% block css %}
 <style>
+    
     .choice{
         font-size: 120%;
         width: 60%;
@@ -40,11 +41,43 @@
         opacity: 0.6;
         cursor: default;
     }
-    
+    .after{
+        display:none;
+    }
+    .fadein{
+        opacity: 1;
+        animation-name: fadeInOpacity;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: 0.5s;
+    }
+    @keyframes fadeInOpacity {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    #photo{
+        max-height: 100%;  
+    max-width: 100%; 
+    width: auto;
+    height: auto;
+    align-items:center;
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    display:flex;
+    justify-content:center;
+    }
 </style>
 {% load static %}
 {% endblock %}
 {% block content %}
+
 <link rel="stylesheet" href="{% static 'ready.css' %}">
 <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -71,13 +104,41 @@
         <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div> {% endcomment %}
     </div>
 </div>
+<div class="container">
+    <div id="after" class="after">
+        <div id="response"></div>
+        <br>
+        <div style="margin:auto;display:flex;justify-content:center;align-items:center;">
+            <div class="row">
+                <div class="col-4">
+                    <a href = '/index/{{ pk }}/'>
+                        <button class="starBtn">回首頁</button>
+                    </a>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <a href = '/chat/{{ pk }}/'>
+                        <button class="starBtn">繼續遊玩</button>
+                    </a>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
 <div id="messages"></div>
+<p id="countdown0" class="memoryTime" style="">0</p>
 <script type="text/javascript">
     var goBack = 0
     var pic_choice = []
     var ans
     var url = `ws://${window.location.host}/ws/game/`
     var chatSocket = new WebSocket(url)
+    var today
+    var new_session
+    var correct = 0
+    var count_number
+    var check_point
+    var nostalgiaGame_round_pk
     chatSocket.onopen  = function(e){
         chatSocket.send(JSON.stringify({
             "goBack":goBack,
@@ -86,9 +147,48 @@
     chatSocket.onmessage = function(e){
         let data = JSON.parse(e.data)
         if(data.type === 'chat'){
+            check_point = data.check_point
+            nostalgiaGame_round_pk = data.nostalgiaGame_round_pk
+            if(check_point==1){
+                $("#topic").css("display","none")
+                $("#after").removeClass("after").addClass("fadein")
+                if(correct==1){
+                    $("#response").html(`
+                        <div style="margin:auto;display:flex;justify-content:center;align-items:center;">
+                            
+                                <span style="font-size:200%;color:green;font-weight:bold">您答對了</span>
+                        </div>
+                                <img src="/media/image/jojo.jpg" id="photo">
+                        </div>
+                        </div>
+                        
+                    `)
+                }
+                else{
+                    $("#response").html(`
+                    <div style="margin:auto;display:flex;justify-content:center;align-items:center;">
+                            
+                        <span style="font-size:200%;color:red;font-weight:bold">您答錯了</span>
+                    </div>
+                            <img src="/media/image/sponge.jpg" id="photo">
+                    </div>
+                    </div>
+                    
+                    `)
+                }
+                
+                //window.location.href='/chat/gameEnd/{{pk}}/';
+                //console.log("觸發所有人答題")
+            }
             if(goBack==0){
                 goBack = 1;
                 ans = data.ans_number
+                today = data.today
+                new_session = data.new_session
+                check_point = data.check_point
+                console.log("today",today)
+                console.log("new_session",new_session)
+                console.log("check_point",check_point)
                 console.log("ans", ans)
                 $("#topic").html(`
                 <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice"  onclick="test1(0)">${data.choice0}</button></div>
@@ -105,18 +205,38 @@
     function test1(e){
         $("button").removeClass("choice").addClass("disabled")
         if(e==ans){
-            
+            correct=1
         }
+        else{
+            correct=0
+        }
+        count_number = $("#countdown0").text();
+        $.ajax({
+            url:"/chat/gameAjax/{{ pk }}/",
+            traditional: true,
+            type:'GET',
+            //dataType:'json',
+            data:{
+                "correct":correct,
+                "today":today,
+                "new_session":new_session,
+                "count_number":count_number,
+                'nostalgiaGame_round_pk':nostalgiaGame_round_pk,
+            },
+            success: function(){
+                console.log("sucess")
+            }
+        })
+        chatSocket.send(JSON.stringify({
+            "goBack":goBack,
+            "correct":correct,
+        }))
+    }
+    timer0 = document.getElementById("countdown0");
+    window.setInterval(countdown0, 1000);
+    function countdown0(){
+        timer0.innerHTML = timer0.innerHTML - (-1);
     }
 
-    function timeout(){
-        window.setTimeout(function() {
-            chatSocket.send(JSON.stringify({
-                'goBack':goBack,
-            }))
-        },1000);
-        setTimeout("timeout()", 1000);
-    }
-    timeout();
 </script>
 {% endblock %}

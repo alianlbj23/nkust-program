@@ -32,7 +32,6 @@ from time import time
 ans_register = list() #紀錄對或錯
 timer_register = list()#紀錄時間
 play_time_star = list()
-
 def index(request, pk):
     '''
     path = './使用者資料/短期記憶/' + str(name) + '/' 
@@ -70,7 +69,6 @@ def index(request, pk):
 
 def login(request):
     userdatas = Userdata.objects.all()
-
     #管理者刪除檔案
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         dataPk = int(request.GET.get("dataPk"))

@@ -45,6 +45,8 @@ urlpatterns = [
     path("historyChart/<int:pk>/<str:gameName>/<int:year>/<int:month>/<int:day>/", historyChart),
     path('chat/<int:pk>/', lobby),#老歌懷舊登入介面
     path('chat/game/<int:pk>/', game_area),#老歌懷舊登入介面
+    path('chat/gameAjax/<int:pk>/', game_area_ajax),#老歌懷舊登入介面
+    path('chat/gameEnd/<int:pk>/', game_area_end),#老歌懷舊登入介面
     #path('chat/<int:pk>/', include('chat.urls')),#老歌懷舊登入介面
     #path('chat/game/<int:pk>/', ),
 ]
