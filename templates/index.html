@@ -22,7 +22,7 @@
         font-weight: Regular;
         font-size: 50px;
         opacity: 1;
-        top: 0px;
+        top: -2px;
         left:3px;
     }
     .button1 {
@@ -342,9 +342,9 @@ a{ text-decoration:none}
 </style>
 {% endblock %}
 {% block content %}
-<nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+{% comment %} <nav class="navbar navbar-expand-md row" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
     
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+    <div class="col-md-6 col-sm-6 navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 ">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <span class="v13_58" ><img src="/media/image/server.png" width="60" height="60">個人資料</span>
@@ -353,8 +353,8 @@ a{ text-decoration:none}
         </ul>
     </div>
     
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
+    <div class="col-md-6 col-sm-6 navbar-collapse collapse w-100 order-3 dual-collapse2 ">
+        <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
                 <a href="/">
                 <img src="/media/image/logout.png" width="60" height="60">
@@ -363,16 +363,35 @@ a{ text-decoration:none}
             </li>
         </ul>
     </div>
-
-</nav>
-
-<div class="row">
-    <div class="col frame">
-        <img class="picture" src="{{individual.image.url }}" width="200" alt="錯誤" id="photo">
+</nav> {% endcomment %}
+<div class="container">
+<div class="row" style="border-width:30px;border-bottom-style:solid;border-color: #00BB00;margin-bottom:5%;margin-top:1%">
+    
+    <div class="col-4 col-md-4 col-sm-4">
+        <span class=" v13_58">個人資料</span>
     </div>
-    <div class="col UserData">
-        <p>姓名:{{ individual.name }}</p>
-        <p>生日:{{ individual.year}}/{{ individual.month }}/{{ individual.day}}</p>
+    <div class="col-4 col-md-4 col-sm-4">
+    </div>
+    <div class="col-4 col-md-4 col-sm-4">
+        <a href="/">
+            <img src="/media/image/logout.png" width="60" height="60">
+            <button  class="button5">回登入畫面</button>
+        </a>
+    </div>
+</div>
+</div>
+
+<div class="row" style="margin-bottom:2%">
+    <div class="col-md-6 col-sm-6">
+        <div class="col frame">
+            <img class="picture" src="{{individual.image.url }}" width="200" alt="錯誤" id="photo">
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="col UserData">
+            <p>姓名:{{ individual.name }}</p>
+            <p>生日:{{ individual.year}}/{{ individual.month }}/{{ individual.day}}</p>
+        </div>
     </div>
 </div>
 

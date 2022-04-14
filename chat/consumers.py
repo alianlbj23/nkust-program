@@ -150,11 +150,9 @@ def start():
             serverMessage = ans_url
             conn.sendall(serverMessage.encode())#傳送url給機器人
             EnterGameKey = 1
-            print("除存錢的readyPeople_in:",readyPeople_in)
             nostalgiaGame_round = NostalgiaGame_round.objects.create(Total_poeple=readyPeople_in)
             nostalgiaGame_round.save()
             nostalgiaGame_round_pk = NostalgiaGame_round.objects.all().first().pk
-            print("除存錢的nostalgiaGame_round_pk:", nostalgiaGame_round_pk)
             # today = str(date.today())
 
             # confirm = NostalgiaGame_time.objects.filter(Date=today)
