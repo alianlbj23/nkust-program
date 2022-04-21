@@ -339,6 +339,58 @@ a{ text-decoration:none}
     right: 0;  
     margin: auto;
 }
+.NostalgiaBtn {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 14px 60px;
+    border: 3px solid #000000;
+    border-radius: 42px;
+    background: #faf3aa;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+    background: -moz-linear-gradient(top, #ffffff, #ffffff);
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
+    -webkit-box-shadow: #dbd2d2 0px 0px 11px 0px;
+    -moz-box-shadow: #dbd2d2 0px 0px 11px 0px;
+    box-shadow: #dbd2d2 0px 0px 11px 0px;
+    text-shadow: #ffffff 0px 1px 1px;
+    font: normal normal bold 32px sans-serif;
+    color: #000000;
+    text-decoration: none;
+}
+.NostalgiaBtn:hover{   /*這個是當鼠標移動到按鈕上 字體會改變的顏色*/
+    background-color: rgb(255, 255, 255); 
+    color: rgb(255, 0, 0);
+}
+
+.NostalgiaBtn:active { /*按下按鈕時 按鈕會產生的反應和顏色變化*/
+  background-color: #5309db;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.NostalgiaBtn:focus { /*按下按鈕後 按鈕的變化*/
+    background: #ffffcc;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffcc), to(#ffffff));
+    background: -moz-linear-gradient(top, #ffffcc, #ffffff);
+    background: linear-gradient(to bottom, #ffffcc, #ffffff);
+    color: #000000;
+    text-decoration: none;
+}
+
+.NostalgiaBtn:before{
+    content:  "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    margin: 0 4px -6px -4px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABOElEQVRIieXUTytEcRTG8U9Dk4RkYSFJlhaThSQrC1lZ2ckbwPuQsJLVFNmSsJa8ABsUJQtJdqQmWUyKLO5vMqb5d+fOrDyb3+13ut/n6ZxzL/9VEzjBM+6wjp5mwefwgPkAHQoGV+hNCk8HeKZMbRNrSQ2mcFahNoyb0stUTIMu5CrU3tFZyoxj0I4FTCs/0Blc4jsG8w98F0dFZ7FJRjSb8UbhezgUDbkjmLyJVvU8wGcrvVwLnhX1fhGfwaAPxzjAB66Rj5s85bcd6XCXDqmzdYQDbVWS76AbG8Esj328YBlfcRMXa1vU80E8ioZXSB53tcuqsBEpDIjZlnq0gldManJyAXSBVdxjq5lwGBX9GQtmiVQOMILb8NzQZ1/LIIf+pOBq6sSTaEVbpiWcttIAxlpt0BT9AP3oOHcC6fXcAAAAAElFTkSuQmCC") no-repeat left center transparent;
+    background-size: 100% 100%;
+
+}
 </style>
 {% endblock %}
 {% block content %}
