@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block css%}
 <style>
     #photo{
@@ -416,36 +418,42 @@ a{ text-decoration:none}
         </ul>
     </div>
 </nav> {% endcomment %}
-<div class="container">
-<div class="row" style="border-width:30px;border-bottom-style:solid;border-color: #00BB00;margin-bottom:5%;margin-top:1%">
-    
-    <div class="col-4 col-md-4 col-sm-4">
-        <span class=" v13_58">個人資料</span>
-    </div>
-    <div class="col-4 col-md-4 col-sm-4">
-    </div>
-    <div class="col-4 col-md-4 col-sm-4">
-        <a href="/">
-            <img src="/media/image/logout.png" width="60" height="60">
-            <button  class="button5">回登入畫面</button>
-        </a>
-    </div>
-</div>
-</div>
-
+<nav id="nav" >
+    <ul class="container">
+        <li><a href="#"><h2 style="color:white">Top</h2></a></li>
+        <li><a href="#"><h2 style="color:white">Top</h2></a></li>
+    </ul>
+</nav>
+<br>
 <div class="row" style="margin-bottom:2%">
     <div class="col-md-6 col-sm-6">
         <div class="col frame">
-            <img class="picture" src="{{individual.image.url }}" width="200" alt="錯誤" id="photo">
+            <span class="image featured"><img src="{{individual.image.url }}" alt=""></span>
         </div>
     </div>
     <div class="col-md-6 col-sm-6">
-        <div class="col UserData">
+        <div class="UserData">
+            <div class="row">
+            <div class="col-md-12 col-sm-12">
             <p>姓名:{{ individual.name }}</p>
+            </div>
+            <div class="col-md-12 col-sm-12">
             <p>生日:{{ individual.year}}/{{ individual.month }}/{{ individual.day}}</p>
+            </div>
+        </div>
         </div>
     </div>
 </div>
+
+{% comment %} <div class="row">
+    <div class="col-4 col-4-medium col-12-small">
+        <article class="box style2 ">
+            <span class="image featured"><img src="{{individual.image.url }}" alt=""></span>
+            <h3>姓名:{{ individual.name }}</h3>
+            <p>生日:{{ individual.year}}/{{ individual.month }}/{{ individual.day}}</p>
+        </article>
+    </div>
+</div> {% endcomment %}
 
 <a class="button1" href="/historyEnterPage/{{ individual.pk }}/" style="margin:20px">查看遊戲歷史紀錄</a>
 <br>

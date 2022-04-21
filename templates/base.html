@@ -1,6 +1,6 @@
 <html>
   <head>
-    
+    {% load static %}
     <meta http-equiv="Content-Type" content = "text/html">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +19,12 @@
     <link rel="icon" href="#" name="x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
     <script type="text/javascript" src="html2canvas-master/dist/html2canvas.js"></script>
+    
+    <link rel="stylesheet" href="{% static 'css_font/all.css' %}">
+    <link rel="stylesheet" href="{% static 'webfonts_font' %}">
+    <link rel="stylesheet" href="{% static 'webfonts' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'cssforhead/main.css' %}">
     <!--<script src="instascan.min.js"></script>
     <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>-->
 
@@ -55,6 +61,12 @@
     <script crossorigin="anonymous" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
     
     {% block javascript %} {% endblock %}
-    
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'jsforhead/jquery.min.js' %}"></script>
+    <script src="{% static 'jsforhead/jquery.scrolly.min.js' %}"></script>
+    <script src="{% static 'jsforhead/browser.min.js' %}"></script>
+    <script src="{% static 'jsforhead/breakpoints.min.js' %}"></script>
+    <script src="{% static 'jsforhead/util.js' %}"></script>
+    <script src="{% static 'jsforhead/main.js' %}"></script>
 </body>
 </html>
