@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import pymysql
 #wampserver 帳號:root 密碼:1234
 #admin帳密都叫robot
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+pymysql.version_info = (1, 4, 13, "final", 0)
+pymysql.install_as_MySQLdb()  # 使用pymysql代替mysqldb连接数据库
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
