@@ -498,19 +498,24 @@ a{ text-decoration:none}
 <article>
     <div class="container">
         <div class="row">
-            <div class="col-5 col-5-large col-12-medium">
+            <div class="col-12 col-5-large col-6-medium col-md-6 col-xs-12">
                 <div class="frame">
                     <span class="image featured "><img src="{{individual.image.url }}" alt=""></span>
                 </div>
             </div>
+            <div class="col-12 col-5-large col-6-medium col-md-6 col-xs-12">
+                <header>
+                    <h1>您好 <strong>{{individual.name}}</strong>.</h1>
+                </header>
+            </div>
         </div>
     </div>
 </article>
-<div class="container">
+{% comment %} <div class="container">
     <header>
         <h1>您好 <strong>{{individual.name}}</strong>.</h1>
     </header>
-</div>
+</div> {% endcomment %}
 {% comment %} <div class="container">
 <div class="row" style="margin-bottom:2%">
     <div class="col-4 col-5-large col-12-medium">
@@ -543,14 +548,20 @@ a{ text-decoration:none}
 <div >
     <span class="gamelist" >遊戲列表:</span>
     <br>
-    <a class="memorybtn" href="/introduction/{{ individual.pk }}/短期記憶遊戲/" style="margin:10px">短期記憶遊戲</a>
-    <br>
-    <a class="OrientationBtn" href="/introduction/{{ individual.pk }}/定向力遊戲/" style="margin:10px">定向力遊戲</a>
-    <br>
-    <a class="AttentionBtn" href="/introduction/{{ individual.pk }}/注意力遊戲/" style="margin:10px">注意力遊戲</a>
-    <br>
-    <a class="NostalgiaBtn" href="/chat/{{ individual.pk }}/" style="margin:10px">老歌懷舊搶答</a>
-    <br>
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+        <a class="memorybtn" href="/introduction/{{ individual.pk }}/短期記憶遊戲/" style="margin:10px">短期記憶遊戲</a>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        <a class="OrientationBtn" href="/introduction/{{ individual.pk }}/定向力遊戲/" style="margin:10px">定向力遊戲</a>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        <a class="AttentionBtn" href="/introduction/{{ individual.pk }}/注意力遊戲/" style="margin:10px">注意力遊戲</a>
+        </div>
+        <div class="col-md-6 col-xs-12">
+        <a class="NostalgiaBtn" href="/chat/{{ individual.pk }}/" style="margin:10px">老歌懷舊搶答</a>
+        </div>
+    </div>
     <!-- <a class="tmp" href="/chat/game/{{ individual.pk }}/" style="margin:10px">tmp</a> -->
 </div>
 
