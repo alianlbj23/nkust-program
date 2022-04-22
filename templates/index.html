@@ -393,6 +393,64 @@ a{ text-decoration:none}
     background-size: 100% 100%;
 
 }
+
+.button-56 {
+  align-items: center;
+  background-color: #fee6e3;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-56:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.button-56:hover:after {
+  transform: translate(0, 0);
+}
+
+.button-56:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.button-56:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .button-56 {
+    padding: 0 40px;
+  }
+}
 </style>
 {% endblock %}
 {% block content %}
@@ -418,33 +476,58 @@ a{ text-decoration:none}
         </ul>
     </div>
 </nav> {% endcomment %}
-<nav id="nav" >
-    <ul class="container">
-        <li><a href="#"><h2 style="color:white">Top</h2></a></li>
-        <li><a href="#"><h2 style="color:white">Top</h2></a></li>
+<div class="container" style="margin:2%">
+<nav id="nav">
+    <ul class="container" >
+        <div class="row">
+            <div class="col-6 col-md-6">
+                
+        <li><h1 style="color:white" class="fa-regular fa-user">個人資料</h1></li>
+            </div>
+            <div class="col-6 col-md-6">
+                <i class="las la-undo"></i>
+                <li><a href="/"><h1 style="color:white" class="las la-undo" >個人資料</h1></a></li>
+
+        {% comment %} <li><a href="/"><h1 style="color:white" class="las la-undo">上一頁</h2></a></li> {% endcomment %}
+            </div>
+        </div>
     </ul>
 </nav>
+</div>
 <br>
-<div class="row" style="margin-bottom:2%">
-    <div class="col-md-6 col-sm-6">
-        <div class="col frame">
-            <span class="image featured"><img src="{{individual.image.url }}" alt=""></span>
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-5 col-5-large col-12-medium">
+                <div class="frame">
+                    <span class="image featured "><img src="{{individual.image.url }}" alt=""></span>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6 col-sm-6">
-        <div class="UserData">
-            <div class="row">
-            <div class="col-md-12 col-sm-12">
-            <p>姓名:{{ individual.name }}</p>
-            </div>
-            <div class="col-md-12 col-sm-12">
-            <p>生日:{{ individual.year}}/{{ individual.month }}/{{ individual.day}}</p>
-            </div>
+</article>
+<div class="container">
+    <header>
+        <h1>您好 <strong>{{individual.name}}</strong>.</h1>
+    </header>
+</div>
+{% comment %} <div class="container">
+<div class="row" style="margin-bottom:2%">
+    <div class="col-4 col-5-large col-12-medium">
+        <div class="frame">
+            <span class="image featured"><img src="{{individual.image.url }}" alt=""></span>
+        </div>
+        <div class="col-8 col-7-large col-12-medium">
+            <header>
+                <h1>Hi. I'm <strong>Jane Doe</strong>.</h1>
+            </header>
+            <p>And this is <strong>Miniport</strong>, a free, fully responsive HTML5 site template designed by <a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net">HTML5 UP</a> &amp; released under the <a href="http://html5up.net/license">CCA license</a>.</p>
+            <a href="#work" class="button large scrolly">Learn about what I do</a>
         </div>
         </div>
     </div>
 </div>
-
+</div> {% endcomment %}
 {% comment %} <div class="row">
     <div class="col-4 col-4-medium col-12-small">
         <article class="box style2 ">
