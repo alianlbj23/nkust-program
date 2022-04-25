@@ -4,6 +4,34 @@
 
 {% block css %}
 <style>
+    .button-54 {
+        font-family: "Open Sans", sans-serif;
+        font-size: 2.5em;
+        {% comment %} letter-spacing: 2px; {% endcomment %}
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #000;
+        cursor: pointer;
+        border: 3px solid;
+        padding: 0.25em 0.5em;
+        box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+        position: relative;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+      
+      .button-54:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+      }
+      
+      @media (min-width: 768px) {
+        .button-54 {
+          padding: 0.25em 0.75em;
+        }
+      }
     table{
         font-size:150%;
         
@@ -166,7 +194,7 @@
 <!--分隔線--> 
 {% block content %}
 
-<nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;">
+{% comment %} <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -183,8 +211,24 @@
     </li>
         </ul>
     </div>
-</nav>
+</nav> {% endcomment %}
 
+<div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="fa-regular fa-user">註冊畫面</h1>
+                </div>
+                <div class="col-6 col-md-6">
+                    <a href="/" ><button class="button-54 " role="button"><span class="las la-undo">回登入畫面</span></button></a>
+                    {% comment %} <a href="/Signup/"><h1 style="color:white" class="las la-undo" >註冊</h1></a> {% endcomment %}
+                </div>
+            </div>
+        </ul>
+    </nav>
+</div>
 <br>
 {% if message %}
     <div class="alert alert-warning">{{ message }}</div>

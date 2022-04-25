@@ -27,6 +27,34 @@
 {% endblock %}
 {% block css %}
 <style>
+  .button-54 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 2.5em;
+    {% comment %} letter-spacing: 2px; {% endcomment %}
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    cursor: pointer;
+    border: 3px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-54:active {
+    box-shadow: 0px 0px 0px 0px;
+    top: 5px;
+    left: 5px;
+  }
+  
+  @media (min-width: 768px) {
+    .button-54 {
+      padding: 0.25em 0.75em;
+    }
+  }
   .button {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -272,7 +300,7 @@ transform: translateY(4px);
 </style>
 {% endblock %}
 {% block content %}
-  <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+  {% comment %} <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -291,26 +319,46 @@ transform: translateY(4px);
           </li>
       </ul>
   </div>
-</nav>
-
+</nav> {% endcomment %}
+<div class="container" style="margin:2%;">
+  <nav id="nav">
+      <ul class="container" >
+          <div class="row">
+              <div class="col-6 col-md-6">
+          <h1 style="color:white" class="las la-book">遊戲介紹</h1>
+              </div>
+              <div class="col-6 col-md-6">
+                  <a href="/index/{{ pk }}/" ><button class="button-54 " role="button"><span class="las la-undo">上一頁</span></button></a>
+                  {% comment %} <a href="/Signup/"><h1 style="color:white" class="las la-undo" >註冊</h1></a> {% endcomment %}
+              </div>
+          </div>
+      </ul>
+  </nav>
+</div>
+<br>
 <h2>歡迎遊玩{{ game_data.title }}!<br><p>以下是本遊戲的玩法介紹:</p></h2>
-<div style="margin:100px;text-align:center">
+<div class="row" style="text-align:center">
   {% if game_data.title == "注意力遊戲" %}
     <audio controls autoplay style="visibility:hidden" id="attention">
       <source src="/media/music/attention.mp3" type="audio/mpeg">
     </audio>
-    <div style="font-size:300%;" id="IntroduceText"> 
+    <div class="col-12"style="font-size:2.5em;" id="IntroduceText"> 
       此音頻當中出現異音時，請<span style="color:red"><b>馬上</b></span>按下<span class="attentionBtn">錯誤</span>按鈕
       (每回只能夠點擊三次)
     </div>
     
   {% elif gameName == "短期記憶遊戲"%}
-    <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
+    <div class="col-12" style="margin:10px">
+    <p style="font-size:2.5em;" id="IntroduceText">{{ game_data.text }}</p>
+    </div>
+    <div class="col-12">
     <audio controls autoplay style="visibility:hidden" id="sortTerm">
       <source src="/media/music/sortTerm_1.mp3" type="audio/mpeg">
     </audio>
+  </div>
   {% elif gameName == "定向力遊戲"%}
     <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
+    <br>
     <audio controls autoplay style="visibility:hidden" id="Orientation">
       <source src="/media/music/Orientation_1.mp3" type="audio/mpeg">
     </audio>

@@ -1640,7 +1640,7 @@ input, select, textarea {
 			}
 
 /* Button */
-
+/* 
 	input[type="button"],
 	input[type="submit"],
 	input[type="reset"],
@@ -1722,7 +1722,7 @@ input, select, textarea {
 			button.alt:active,
 			.button.alt:active {
 				background-color: #3f3f3f;
-			}
+			} */
 
 /* List */
 
@@ -2023,7 +2023,7 @@ input, select, textarea {
 		width: 100%;
 		z-index: 10000;
 		cursor: default;
-		height: 3.5em;
+		height: 4.5em;
 		line-height: 3.5em;
 	}
 
@@ -2269,7 +2269,7 @@ input, select, textarea {
 
 		/* Button */
 
-			input[type="button"],
+			/* input[type="button"],
 			input[type="submit"],
 			input[type="reset"],
 			button,
@@ -2287,7 +2287,7 @@ input, select, textarea {
 				.button.large {
 					font-size: 1.2em;
 					letter-spacing: 0;
-				}
+				} */
 
 		/* Social */
 
@@ -2420,24 +2420,5 @@ input, select, textarea {
 					#copyright li:first-child {
 						margin-top: 0;
 					}
-
 	}
-	.button {
-		background-color: #4CAF50; /* Green */
-		border: none;
-		color: white;
-		padding: 16px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		margin: 4px 2px;
-		transition-duration: 0.4s;
-		cursor: pointer;
-	  }
-	  
-	  .button1 {
-		background-color: white; 
-		color: black; 
-		border: 2px solid #4CAF50;
-	  }
+	
