@@ -1603,7 +1603,7 @@ input, select, textarea {
 
 /* Image */
 
-	.image {
+	/* .image {
 		display: inline-block;
 		position: relative;
 	}
@@ -1637,7 +1637,7 @@ input, select, textarea {
 			.image.centered img {
 				margin: 0 auto;
 				width: auto;
-			}
+			} */
 
 /* Button */
 /* 
@@ -2078,13 +2078,12 @@ input, select, textarea {
 				} */
 
 /* Articles */
-
 	body > article {
 		margin-bottom: 0;
 	}
 
 	#top {
-		padding: 10em 0 10em 0;
+		padding: 5em 0 5em 0;
 		text-align: left;
 	}
 
@@ -2263,7 +2262,7 @@ input, select, textarea {
 
 		/* Section/Article */
 
-			section, article {
+			article {
 				clear: both;
 			}
 
@@ -2421,4 +2420,5 @@ input, select, textarea {
 						margin-top: 0;
 					}
 	}
+	
 	

@@ -10,11 +10,7 @@
         text-align: center;
         
     }
-    button {
-    margin: 20px;
-    outline: none;
     
-    }
     .custom-btn {
         font-size: 25px;
     width: 150px;
@@ -174,10 +170,38 @@
         color:orange;
         font-size: 30px;
     }
+    .button-54 {
+        font-family: "Open Sans", sans-serif;
+        font-size: 5vmin;
+        {% comment %} letter-spacing: 2px; {% endcomment %}
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #000;
+        cursor: pointer;
+        border: 3px solid;
+        padding: 0.25em 0.5em;
+        box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+        position: relative;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+      
+      .button-54:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+      }
+      
+      @media (min-width: 768px) {
+        .button-54 {
+          padding: 0.25em 0.75em;
+        }
+      }
 </style>
 {% endblock %}
 {% block content %}
-<nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+{% comment %} <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -193,13 +217,33 @@
     </li>
         </ul>
     </div>
-</nav>
+</nav> {% endcomment %}
+<div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="las la-history">{{ year }}年</h1>
+                </div>
+                <div class="col-6 col-md-6">
+                    <a href="/historyYear/{{ pk }}/{{ gameName }}/" ><button class="button-54 " role="button"><span class="las la-undo">上一頁</span></button></a>
+                    {% comment %} <a href="/Signup/"><h1 style="color:white" class="las la-undo" >註冊</h1></a> {% endcomment %}
+                </div>
+            </div>
+        </ul>
+    </nav>
+</div>
+<br>
 
 <div class="row align-items-start" >
+    
     {% for month in monthList %}
+        <div class="col-md-2 col-sm-2 col-xs-2">
         <a href="/historyDay/{{ pk }}/{{ gameName }}/{{ year }}/{{ month }}/">
             <button class="custom-btn btn-7"><div class="col-sm">{{ month }}月</div></button>
         </a>
+    </div>
     {% endfor %}
     <br>
     <br>

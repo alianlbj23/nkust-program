@@ -3,9 +3,11 @@
 
 {% block css%}
 <style>
+    
+
     .button-54 {
         font-family: "Open Sans", sans-serif;
-        font-size: 2.25em;
+        font-size: 5vmin;
         {% comment %} letter-spacing: 2px; {% endcomment %}
         text-decoration: none;
         text-transform: uppercase;
@@ -34,7 +36,7 @@
     #photo{
         width: 100%;
         height: 320px;
-        object-fit: cover;
+        object-fit: contain;
     }
     .UserData{
         margin:20px;
@@ -354,7 +356,8 @@ a{ text-decoration:none}
     a:hover{ text-decoration:none}
 .frame {  
     height: 300px; /*can be anything*/
-    width: 300px; /*can be anything*/
+    max-width: 300px; /*can be anything*/
+
     position: relative;
 }
 .picture {  
@@ -426,13 +429,13 @@ a{ text-decoration:none}
   align-items: center;
   background-color: #fee6e3;
   border: 2px solid #111;
-  border-radius: 8px;
+  border-radius: 1px;
   box-sizing: border-box;
   color: #111;
   cursor: pointer;
   display: flex;
   font-family: Inter,sans-serif;
-  font-size: 16px;
+  font-size: 2.5em;
   height: 48px;
   justify-content: center;
   line-height: 24px;
@@ -520,6 +523,24 @@ a{ text-decoration:none}
     </ul>
 </nav>
 </div> {% endcomment %}
+
+<div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="fa-regular fa-user">個人畫面</h1>
+                </div>
+                <div class="col-6 col-md-6">
+                    <a href="/" ><button class="button-54 " role="button"><span class="las la-undo">登入畫面</span></button></a>
+                    {% comment %} <a href="/Signup/"><h1 style="color:white" class="las la-undo" >註冊</h1></a> {% endcomment %}
+                </div>
+            </div>
+        </ul>
+    </nav>
+</div>
+{% comment %} 
 <div class="container" style="margin:2%;">
     <nav id="nav">
         <ul class="container" >
@@ -529,21 +550,24 @@ a{ text-decoration:none}
             <h1 style="color:white" class="fa-regular fa-user">註冊畫面</h1>
                 </div>
                 <div class="col-6 col-md-6">
-                    <a href="/" ><button class="button-54 " role="button"><span class="las la-undo">回登入畫面</span></button></a>
-                    {% comment %} <a href="/Signup/"><h1 style="color:white" class="las la-undo" >註冊</h1></a> {% endcomment %}
+                    <a href="/" ><button class="button-54 " role="button"><span class="las la-undo"></span></button></a>
                 </div>
             </div>
         </ul>
     </nav>
 </div>
-<br>
-<article>
+<br> {% endcomment %}
+
+{% comment %} <article>
     <div class="container">
         <div class="row">
             <div class="col-12 col-5-large col-6-medium col-md-6 col-xs-12">
-                <div class="frame">
-                    <span class="image featured "><img src="{{individual.image.url }}" alt=""></span>
-                </div>
+                
+                    <span class="image fit"><img src="{{individual.image.url }}" alt=""></span>
+                
+                {% comment %} <div class="wrapper">
+                    <span class="wrapper_inside"><img src="{{individual.image.url }}" alt=""></span>
+                </div> 
             </div>
             <div class="col-12 col-5-large col-6-medium col-md-6 col-xs-12">
                 <header>
@@ -554,7 +578,45 @@ a{ text-decoration:none}
             </div>
         </div>
     </div>
-</article>
+</article> {% endcomment %}
+
+{% comment %} <article id="top" class="wrapper style1">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-5-large col-12-medium col-xs-12">
+                <span style="width:100px;height:100px;object-fit:contain"><img src="{{individual.image.url}}" alt="" /></span>
+            </div>
+            <div class="col-8 col-7-large col-12-medium col-xs-12">
+                <header>
+                    <h1>您好 <strong>{{individual.name}}</strong>.</h1>
+                    <br>
+                    <h2>現在時間:{% now " F Y H:i" %}</h2>
+                </header>
+            </div>
+        </div>
+    </div>
+</article> {% endcomment %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            
+            <span><img src="{{individual.image.url}}" alt="" id="photo"></span>
+            
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>您好 <strong>{{individual.name}}</strong>.</h1>
+                </div>
+                <div class="col-md-12">
+                    <h2>現在時間:{% now " F Y H:i" %}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% comment %} <div class="container">
     <header>
         <h1>您好 <strong>{{individual.name}}</strong>.</h1>

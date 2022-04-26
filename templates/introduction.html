@@ -29,7 +29,7 @@
 <style>
   .button-54 {
     font-family: "Open Sans", sans-serif;
-    font-size: 2.5em;
+    font-size: 5vmin;
     {% comment %} letter-spacing: 2px; {% endcomment %}
     text-decoration: none;
     text-transform: uppercase;
@@ -342,14 +342,14 @@ transform: translateY(4px);
     <audio controls autoplay style="visibility:hidden" id="attention">
       <source src="/media/music/attention.mp3" type="audio/mpeg">
     </audio>
-    <div class="col-12"style="font-size:2.5em;" id="IntroduceText"> 
+    <div class="col-12"style="font-size:5vmin;" id="IntroduceText"> 
       此音頻當中出現異音時，請<span style="color:red"><b>馬上</b></span>按下<span class="attentionBtn">錯誤</span>按鈕
       (每回只能夠點擊三次)
     </div>
     
   {% elif gameName == "短期記憶遊戲"%}
     <div class="col-12" style="margin:10px">
-    <p style="font-size:2.5em;" id="IntroduceText">{{ game_data.text }}</p>
+    <p style="font-size:5vmin;" id="IntroduceText">{{ game_data.text }}</p>
     </div>
     <div class="col-12">
     <audio controls autoplay style="visibility:hidden" id="sortTerm">
@@ -357,13 +357,13 @@ transform: translateY(4px);
     </audio>
   </div>
   {% elif gameName == "定向力遊戲"%}
-    <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
+    <p style="font-size:5vmin;" id="IntroduceText">{{ game_data.text }}</p>
     <br>
     <audio controls autoplay style="visibility:hidden" id="Orientation">
       <source src="/media/music/Orientation_1.mp3" type="audio/mpeg">
     </audio>
   {% elif gameName == "老歌懷舊搶答遊戲"%}  
-    <p style="font-size:300%;" id="IntroduceText">{{ game_data.text }}</p>
+    <p style="font-size:5vmin;" id="IntroduceText">{{ game_data.text }}</p>
   {% endif %}
 </div>
 

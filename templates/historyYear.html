@@ -10,11 +10,11 @@
         text-align: center;
         
     }
-    button {
+    {% comment %} button {
     margin: 20px;
     outline: none;
     
-    }
+    } {% endcomment %}
     .custom-btn {
         font-size: 25px;
     width: 150px;
@@ -135,11 +135,57 @@
         background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABh0lEQVRIibXVMUhVYRQH8B/Pi4i8wUlERB4RTRIi4uAQDg4i4vhoampoCJEIaWpxEJKmMBAFRxERcVEcIlpaREJEQyIkRIJw0D2k4dwH+VDve3rff/vu933nf87//L9zuRnJLXv3xiPMNSp4H35jO49ghar1MNaxiFZ0oXjNuTuhjGMMoBe7OMIpvmMpPVO8S/CX+CG0r0YLHuAZ1lLC9+ioJ/gpOms8347p9M5rNGdd6MAOZtSndRc28LmW5NrwCQvC/+14inH0u1n3Al4JeR9mkTRjJc1qBCdYxhdh2z3MCgNUV1rGT5SySBLxwE5cfQcJejCF/ZR0uOruc+G8TJcV8BZbtyQxhm9YFXJWMI8PWQQV9GXsJ3gjpBlMvxVFPwZqJakFQ/iF0XRdFobJFY9TkidC4gPhvlwxKEZNNybV0Yt6MCHMURK9SHKZkv/ho2h0P/6iuylngksxgd+JCfwn7wrgK87FBC7lXUEFl3iBnUZUAJuiB/n8Cq/BGQ5x0SiJ4AK7/wCn8UdE6vGrrAAAAABJRU5ErkJggg==") no-repeat left center transparent;
         background-size: 100% 100%;
     }
+
+    .button-54 {
+        font-family: "Open Sans", sans-serif;
+        font-size: 5vmin;
+        {% comment %} letter-spacing: 2px; {% endcomment %}
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #000;
+        cursor: pointer;
+        border: 3px solid;
+        padding: 0.25em 0.5em;
+        box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+        position: relative;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+      
+      .button-54:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+      }
+      
+      @media (min-width: 768px) {
+        .button-54 {
+          padding: 0.25em 0.75em;
+        }
+      }
     
 </style>
 {% endblock %}
 {% block content %}
-<nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
+<div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="las la-history">歷史資料</h1>
+                </div>
+                <div class="col-6 col-md-6">
+                    <a href="/historyEnterPage/{{ pk }}/" ><button class="button-54 " role="button"><span class="las la-undo">上一頁</span></button></a>
+                    {% comment %} <a href="/Signup/"><h1 style="color:white" class="las la-undo" >註冊</h1></a> {% endcomment %}
+                </div>
+            </div>
+        </ul>
+    </nav>
+</div>
+<br>
+{% comment %} <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -155,7 +201,8 @@
     </li>
         </ul>
     </div>
-</nav>
+</nav> {% endcomment %}
+
 
 <div class="row">
     {% for year in yearList %}
