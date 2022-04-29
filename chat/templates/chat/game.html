@@ -5,7 +5,70 @@
 
 {% block css %}
 <style>
-    
+    .button-54 {
+        font-family: "Open Sans", sans-serif;
+        font-size: 5vmin;
+        {% comment %} letter-spacing: 2px; {% endcomment %}
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #000;
+        cursor: pointer;
+        border: 3px solid;
+        padding: 0.25em 0.5em;
+        box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+        position: relative;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+      
+      .button-54:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+      }
+      
+      @media (min-width: 768px) {
+        .button-54 {
+          padding: 0.25em 0.75em;
+        }
+      }
+    .lds-facebook {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+      }
+      .lds-facebook div {
+        display: inline-block;
+        position: absolute;
+        left: 8px;
+        width: 16px;
+        background: black;
+        animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+      }
+      .lds-facebook div:nth-child(1) {
+        left: 8px;
+        animation-delay: -0.24s;
+      }
+      .lds-facebook div:nth-child(2) {
+        left: 32px;
+        animation-delay: -0.12s;
+      }
+      .lds-facebook div:nth-child(3) {
+        left: 56px;
+        animation-delay: 0;
+      }
+      @keyframes lds-facebook {
+        0% {
+          top: 8px;
+          height: 64px;
+        }
+        50%, 100% {
+          top: 24px;
+          height: 32px;
+        }
+      }
     .choice{
         font-size: 120%;
         width: 60%;
@@ -79,6 +142,7 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'ready.css' %}">
+{% comment %} 
 <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;margin-bottom:20px;">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
@@ -95,8 +159,42 @@
             </li>
         </ul>
   </div>
-</nav>
+</nav> {% endcomment %}
+{% comment %} <div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="fa-regular fa-user">個人畫面</h1>
+                </div>
+                <div class="col-6 col-md-6">
+                    <a href="/" ><button class="button-54 " role="button"><span class="las la-undo">登入畫面</span></button></a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+</div> {% endcomment %}
+<div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="las la-music">開始猜歌囉</h1>
+                </div>
+                
+            </div>
+        </ul>
+    </nav>
+</div>
+
 <div class="container">
+    <div class="row" id="wait" style="margin:auto">
+        <h1>Loading</h1><div class="lds-facebook"><div></div><div></div><div></div></div>
+    </div>
+</div>
+<div class="container" style="margin-top:2%">
     <div class="row" id="topic">
         {% comment %} <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div>
         <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div>
@@ -126,7 +224,7 @@
     </div>
 </div>
 <div id="messages"></div>
-<p id="countdown0" class="memoryTime" style="">0</p>
+<p id="countdown0" class="memoryTime" style="display:none">0</p>
 <script type="text/javascript">
     var goBack = 0
     var pic_choice = []
@@ -134,11 +232,11 @@
     var url = `ws://${window.location.host}/ws/game/`
     var chatSocket = new WebSocket(url)
     var today
-    var new_session
     var correct = 0
     var count_number
     var check_point
     var nostalgiaGame_round_pk
+    var EnterGameKey
     chatSocket.onopen  = function(e){
         chatSocket.send(JSON.stringify({
             "goBack":goBack,
@@ -148,7 +246,31 @@
         let data = JSON.parse(e.data)
         if(data.type === 'chat'){
             check_point = data.check_point
-            nostalgiaGame_round_pk = data.nostalgiaGame_round_pk
+            EnterGameKey = data.EnterGameKey
+            console.log("EnterGameKey", EnterGameKey)
+            if(EnterGameKey==1){//start game
+                console.log("觸發")
+                $("#wait").css("display","none")
+                clearTimeout(timeout1)
+                if(goBack==0){
+                    ans = data.ans_number
+                    today = data.today
+                    check_point = data.check_point
+                    nostalgiaGame_round_pk = data.nostalgiaGame_round_pk
+                    $("#topic").html(`
+                    <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice"  onclick="test1(0)">${data.choice0}</button></div>
+                    <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(1)">${data.choice1}</button></div>
+                    <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(2)">${data.choice2}</button></div>
+                    <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(3)">${data.choice3}</button></div>
+                    `)
+                }
+                timer0 = document.getElementById("countdown0");
+                window.setInterval(countdown0, 1000);
+                function countdown0(){
+                    timer0.innerHTML = timer0.innerHTML - (-1);
+                }
+            }
+            console.log("check_point",check_point)
             if(check_point==1){
                 $("#topic").css("display","none")
                 $("#after").removeClass("after").addClass("fadein")
@@ -180,23 +302,7 @@
                 //window.location.href='/chat/gameEnd/{{pk}}/';
                 //console.log("觸發所有人答題")
             }
-            if(goBack==0){
-                goBack = 1;
-                ans = data.ans_number
-                today = data.today
-                new_session = data.new_session
-                check_point = data.check_point
-                console.log("today",today)
-                console.log("new_session",new_session)
-                console.log("check_point",check_point)
-                console.log("ans", ans)
-                $("#topic").html(`
-                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice"  onclick="test1(0)">${data.choice0}</button></div>
-                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(1)">${data.choice1}</button></div>
-                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(2)">${data.choice2}</button></div>
-                <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(3)">${data.choice3}</button></div>
-                `)
-            }
+            
             
         }
     }
@@ -210,6 +316,8 @@
         else{
             correct=0
         }
+        goBack = 1;
+        
         count_number = $("#countdown0").text();
         $.ajax({
             url:"/chat/gameAjax/{{ pk }}/",
@@ -219,7 +327,6 @@
             data:{
                 "correct":correct,
                 "today":today,
-                "new_session":new_session,
                 "count_number":count_number,
                 'nostalgiaGame_round_pk':nostalgiaGame_round_pk,
             },
@@ -227,16 +334,26 @@
                 console.log("sucess")
             }
         })
+        console.log("correct_test", correct)
         chatSocket.send(JSON.stringify({
             "goBack":goBack,
             "correct":correct,
         }))
+        goBack = 0;
     }
-    timer0 = document.getElementById("countdown0");
-    window.setInterval(countdown0, 1000);
-    function countdown0(){
-        timer0.innerHTML = timer0.innerHTML - (-1);
+
+    function timeout1(){
+        var abc=0
+        window.setTimeout(function() {
+            console.log("test")
+            chatSocket.send(JSON.stringify({
+                'goBack':goBack,
+            }))
+        },1000);
+        setTimeout("timeout1()", 1000);
     }
+    timeout1();
+    
 
 </script>
 {% endblock %}

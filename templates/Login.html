@@ -238,9 +238,42 @@
     </div>
     {% endfor %}
 </div>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    var textWrapper = document.querySelector('.ml2');
+    $("div #showWarringBox").click(function(){
+        swal({
+            title: "你確定要刪除?",
+            text: "刪了就不見了喔",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("成功刪除", {
+                icon: "success",
+              });
+              var dataPk = $(this).text()
+        dataPk = dataPk.replace("刪除", " ")
+        $.ajax({
+                url:"/",
+                traditional: true,
+                type:'GET',
+                //dataType:'json',
+                data:{
+                    "dataPk" : dataPk,
+                },
+                success: function(){
+                    
+                    location.reload();
+                }
+        })
+            } else {
+        swal("該使用者沒被刪除");
+            }
+          });
+    });
+    {% comment %} var textWrapper = document.querySelector('.ml2');
 textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
 anime.timeline({loop: false})
@@ -260,6 +293,7 @@ anime.timeline({loop: false})
     delay: 1000
   });
     $("div #showWarringBox").click(function(){
+        console.log("delete_test")
         swal({
     title: "確定要刪除使用者?",
     text: "刪了就不見了喔",
@@ -294,7 +328,7 @@ anime.timeline({loop: false})
     }
 });
     })
-    
+     {% endcomment %}
     
 
 

@@ -83,15 +83,15 @@
 <div style="margin:30px;text-align:center">
     <p style="font-size:5vmin;" > 
     等一下會撥放歌曲，請根據歌曲選出正確的名稱。
-    準備完成後請點擊"準備完成"
+    準備完成後請點擊"進入遊玩房間"
     </p>
 </div>
 
 
 
 <ul class="nav nav-pills nav-fill" style="margin:50px;text-align:center">
-    <button class="readyBtn" id="readyBtn">準備完成</button>
-    <div id="messages">0/0</div>
+    <button class="readyBtn" id="readyBtn">進入遊玩房間</button>
+    {% comment %} <div id="messages">0/0</div> {% endcomment %}
     <li class="nav-item">&nbsp;</li>
     <li class="nav-item">
     <div id="hr"></div>
@@ -144,11 +144,12 @@
             messages.insertAdjacentHTML('beforeend', `<div>
                                     <p>${data.message}/0</p>
                                 </div>`)*/
-            $("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
+            //$("#messages").html(`<p>${data.count}/<span id="readyPeople">${data.readyPeople_in}</span></p>`)
         }
     }
     let form = document.getElementById('readyBtn')
     form.addEventListener('click', (e)=> {
+        window.location.href='/chat/game/{{pk}}/';
         $("#readyBtn").attr("disabled", true);
         $("#readyBtn").text("等待中~");
         if(selfFlag==0){//確認是否打勾狀態

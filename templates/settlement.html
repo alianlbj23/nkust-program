@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}結算畫面{% endblock %}
+{% load static %}
 {% block javascript %} 
 <script>
     $(document).ready(function(){
@@ -13,16 +14,6 @@
 
 {% block css %}
 <style>
-    .v13_58 {
-        color: rgba(0, 0, 0, 1);
-        font-family: Roboto;
-        font-weight: Regular;
-        font-size: 50px;
-        opacity: 1;
-        top: 0px;
-        left:3px;
-        
-    }
     #correct{
         text-align:left;
         font-family:fantasy;
@@ -38,13 +29,13 @@
     #ans{
         text-align:center;
         font-family:fantasy;
-        font-size:400%;
+        font-size: 7vmin;
         color:orange;
     }
     #headtext{
         text-align:center;
         font-family:fantasy;
-        font-size:400%;
+        font-size: 7vmin;
         color:black;
     }
     .button {
@@ -67,7 +58,7 @@
     }
     .fadein{
         opacity: 1;
-        padding:0px;
+        
         animation-name: fadeInOpacity;
         animation-iteration-count: 1;
         animation-timing-function: ease-in;
@@ -87,11 +78,11 @@
 {% block content %}
 
 
-<div style="margin:20px">
+
     
 
-    <div class="change">
-        <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;">
+    <div class="change" style="margin-top:1%"> 
+        {% comment %} <nav class="navbar navbar-expand-md" style="border-bottom:solid 20px;border-color:#00BB00;margin-top:20px;">
             <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
@@ -100,21 +91,34 @@
                     
                 </ul>
             </div>
-        </nav>
+        </nav> {% endcomment %}
+<div class="container" style="margin:2%;">
+    <nav id="nav">
+        <ul class="container" >
+            <div class="row">
+                <div class="col-6 col-md-6">
+                    
+            <h1 style="color:white" class="fa-solid fa-flag-checkered">結算畫面</h1>
+                </div>
+            </div>
+        </ul>
+    </nav>
+</div>
+    <div class="row">
         {% if gameMod == "SortTermMemoryGame"%}
             <br>
-            {% for i in ans %}
+            {% comment %} {% for i in ans %}
                 {% if i %}
                     <p id="correct">答對</p>
                 {% else %}
                     <p id="erro">答錯</p>
                 {% endif %}
-            {% endfor %}
-            <p id="headtext">遊玩時間:{{ sorttermmemory.add_time }}</p>
-            <p id="headtext">共遊玩次數:{{ count }}</p>
-            <p id="ans">總分{{ sorttermmemory.correct_rate }}</p>
-            <p id="ans">共花{{ sorttermmemory.costTime }}秒!</p>
-            
+            {% endfor %} {% endcomment %}
+            <span id="headtext" class="col-12 col-md-12 col-sm-12">遊玩時間:{{ sorttermmemory.add_time }}</span>
+            <span id="headtext" class="col-12 col-md-12 col-sm-12">共遊玩次數:{{ count }}</span>
+            <span id="ans" class="col-12 col-md-12 col-sm-12">總分{{ sorttermmemory.correct_rate }}</span>
+            <span id="ans" class="col-12 col-md-12 col-sm-12">共花{{ sorttermmemory.costTime }}秒!</span>
+        </div>
             
         {% endif %}
 
@@ -131,6 +135,6 @@
         {% endif %}
         <br>
         <a href="/index/{{ pk }}/"><button class="button" style="margin:auto">回首頁</button></a>
-    </div>
-</div>
+    
+
 {% endblock %}
