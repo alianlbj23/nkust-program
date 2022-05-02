@@ -136,6 +136,7 @@
     display:flex;
     justify-content:center;
     }
+    
 </style>
 {% load static %}
 {% endblock %}
@@ -206,21 +207,23 @@
     <div id="after" class="after">
         <div id="response"></div>
         <br>
-        <div style="margin:auto;display:flex;justify-content:center;align-items:center;">
+        {% comment %} <div style="margin:auto;display:flex;justify-content:center;align-items:center;"> {% endcomment %}
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-sm-12 col-md-4">
                     <a href = '/index/{{ pk }}/'>
-                        <button class="starBtn">回首頁</button>
+                        <button type="button" class="btn btn-success" style="font-size:3vmin">回首頁</button>
+                        {% comment %} <button class="starBtn">回首頁</button> {% endcomment %}
                     </a>
                 </div>
                 <div class="col-4"></div>
-                <div class="col-4">
+                <div class="col-12 col-sm-12 col-md-4">
                     <a href = '/chat/{{ pk }}/'>
-                        <button class="starBtn">繼續遊玩</button>
+                        <button type="button" class="btn btn-success" style="font-size:3vmin">繼續遊玩</button>
+                        {% comment %} <button class="starBtn">繼續遊玩</button> {% endcomment %}
                     </a>
                 </div>  
             </div>
-        </div>
+        {% comment %} </div> {% endcomment %}
     </div>
 </div>
 <div id="messages"></div>

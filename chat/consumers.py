@@ -268,7 +268,6 @@ class ChatConsumer2(WebsocketConsumer):
         check_point = 0
         text_data_json = json.loads(text_data)
         goBack = text_data_json['goBack']
-        print('[EnterGameKey]', EnterGameKey)
         if goBack==1:#答完題目回來
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             correct = text_data_json['correct']

@@ -144,9 +144,9 @@ USE_TZ = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static5/'
+STATIC_URL = '/static2/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static5')
+    os.path.join(BASE_DIR, 'static2')
 ]#放靜態檔用的
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'))
 
