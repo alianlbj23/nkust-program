@@ -238,6 +238,7 @@
     var chatSocket = new WebSocket(url)
     var today
     var correct = 0
+    var flag=0
     var count_number
     var check_point
     var nostalgiaGame_round_pk
@@ -245,6 +246,7 @@
     chatSocket.onopen  = function(e){
         chatSocket.send(JSON.stringify({
             "goBack":goBack,
+            'flag':flag,
         }))
     }
     chatSocket.onmessage = function(e){
@@ -257,11 +259,12 @@
                 console.log("觸發")
                 $("#wait").css("display","none")
                 clearTimeout(timeout1)
-                if(goBack==0){
+                if(flag==0){
                     ans = data.ans_number
                     today = data.today
                     check_point = data.check_point
                     nostalgiaGame_round_pk = data.nostalgiaGame_round_pk
+                    console.log(ans)
                     $("#topic").html(`
                     <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice"  onclick="test1(0)">${data.choice0}</button></div>
                     <div class="col-xs-12 col-sm-6 col-md-12"><button class="choice" onclick="test1(1)">${data.choice1}</button></div>
@@ -280,7 +283,7 @@
                 $("#after").removeClass("after").addClass("fadein")
                 if(correct==1){
                     $("#response").html(`
-                        <div style="margin:auto;display:flex;justify-content:center;align-items:center;">
+                        <div style="margin:auto;display:flex;justify-content:center;align-items:center;margin-top:20px;">
                             
                                 <span style="font-size:200%;color:green;font-weight:bold">您答對了</span>
                         </div>
@@ -292,7 +295,7 @@
                 }
                 else{
                     $("#response").html(`
-                    <div style="margin:auto;display:flex;justify-content:center;align-items:center;">
+                    <div style="margin:auto;display:flex;justify-content:center;align-items:center;margin-top:20px;">
                             
                         <span style="font-size:200%;color:red;font-weight:bold">您答錯了</span>
                     </div>
@@ -323,7 +326,7 @@
             correct=0
         }
         goBack = 1;
-        
+        flag=1;
         count_number = $("#countdown0").text();
         $.ajax({
             url:"/chat/gameAjax/{{ pk }}/",
@@ -339,9 +342,11 @@
             success: function(){
             }
         })
+        console.log("correct",correct)
         chatSocket.send(JSON.stringify({
             "goBack":goBack,
             "correct":correct,
+            'flag':flag,
         }))
     }
 
@@ -350,6 +355,7 @@
         window.setTimeout(function() {
             chatSocket.send(JSON.stringify({
                 'goBack':goBack,
+                'flag':flag,
             }))
         },1000);
         setTimeout("timeout1()", 1000);

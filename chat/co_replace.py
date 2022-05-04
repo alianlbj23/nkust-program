@@ -268,38 +268,29 @@ class ChatConsumer2(WebsocketConsumer):
         global EnterGameKey
         check_point = 0
         text_data_json = json.loads(text_data)
-        try:
-            flag = text_data_json['flag']
-        except:
-            pass
         goBack = text_data_json['goBack']
-        if flag==1:#答完題目回來
-            print("[答完題目]")
-            try:
-                correct = text_data_json['correct']
-            
-                global correct_people
-                global error_people
-                global readyPeople_in
-                if correct == 1:
-                    correct_people += 1
-                elif correct == 0:
-                    error_people += 1
-                print("遊玩人數:", count)
-                print("correct_people:", correct_people)
-                print("error_people:", error_people)
-                check = count - (correct_people+error_people)
-                print("[剩餘答題人數]:", check)
-                if check == 0:#當系統偵測到所有人已達完題目
-                    check_point = 1
-                    EnterGameKey = 0
-                    print("!!!!!!!!!!!!!!", correct_people)
-                    print("所有人答完題目了，目前pk:", nostalgiaGame_round_pk)
-                    NostalgiaGame_round.objects.filter(pk=nostalgiaGame_round_pk).update(Correct_people=correct_people,Fail_people=error_people)
-                    readyPeople_in = 0
-                    print("allPeople have to answer this quation")
-            except:
-                pass
+        if goBack==1:#答完題目回來
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            correct = text_data_json['correct']
+            global correct_people
+            global error_people
+            global readyPeople_in
+            if correct == 1:
+                correct_people += 1
+            elif correct == 0:
+                error_people += 1
+            print("遊玩人數:", count)
+            print("correct_people:", correct_people)
+            print("error_people:", error_people)
+            check = count - (correct_people+error_people)
+            print("[剩餘答題人數]:", check)
+            if check == 0:#當系統偵測到所有人已達完題目
+                check_point = 1
+                EnterGameKey = 0
+                print("所有人答完題目了，目前pk:", nostalgiaGame_round_pk)
+                NostalgiaGame_round.objects.filter(pk=nostalgiaGame_round_pk).update(Correct_people=correct_people,Fail_people=error_people)
+                readyPeople_in = 0
+                print("allPeople have to answer this quation")
         if EnterGameKey == 0:
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
