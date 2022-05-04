@@ -92,6 +92,24 @@
         background-color: 	#AE0000;
         color: #fff;
     }
+    .NostalgiaGameBtn{
+        width: 350px;
+        height: 50px;
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        line-height: 40px;
+        color: 		#8A2BE2;
+        background-color: transparent;
+        border: 1px solid 	#8A2BE2;
+        transition: all .3s linear;
+        font: bold  normal normal 35px arial;
+        
+    }
+    .NostalgiaGameBtn:hover{
+        background-color: 	#8A2BE2;
+        color: #fff;
+    }
     .button5 {
         display: inline-block;
         text-align: center;
@@ -198,6 +216,8 @@
     <a href="/historyYear/{{ pk }}/OrientationGame/"><div class="OrientationBtn" style="margin:10px;margin:auto">定向力遊戲</div></a>
     <br>
     <a href="/historyYear/{{ pk }}/AttentionGame/"><div class="AttentionBtn" style="margin:10px;margin:auto">注意力遊戲</div></a>
+    <br>
+    <a href="/historyYear/{{ pk }}/NostalgiaGame/"><div class="NostalgiaGameBtn" style="margin:10px;margin:auto">老歌懷舊搶答</div></a>
 </div>
 
 {% endblock %}

@@ -384,6 +384,8 @@ def historyChart(request, pk, gameName, year, month, day):
         key = 2
     if gameName == "OrientationGame":
         key = 3
+    if gameName == "NostalgiaGame":
+        key = 4
     if year!=0 and month!=0 and day!=0:#要找某天的
         title = str(year)+"年"+str(month)+"月"+str(day)+"日"
         if key == 1:
@@ -395,7 +397,10 @@ def historyChart(request, pk, gameName, year, month, day):
         elif key == 3:
             totalData = Orientation.objects.filter(mod=gamemode)
             totalData = totalData.filter(add_time__month=month,add_time__day=day).order_by("add_time")
-
+        elif key == 4:
+            totalData = NostalgiaGame_player.objects.filter(mod=gamemode)            
+            totalData = totalData.filter(add_time__month=month,add_time__day=day).order_by("add_time")
+            return render(request, 'historyChart_forNostalgiaGame.html', locals())
     elif year != 0 and month != 0 and day == 0: #找當月的
         title = str(year)+"年"+str(month)+"月"
         if key == 1:
@@ -406,6 +411,9 @@ def historyChart(request, pk, gameName, year, month, day):
             totalData = totalData.filter(add_time__month=month).order_by("add_time")
         elif key == 3:
             totalData = Orientation.objects.filter(mod=gamemode)
+            totalData = totalData.filter(add_time__month=month).order_by("add_time")
+        elif key == 4:
+            totalData = NostalgiaGame_player.objects.filter(mod=gamemode)
             totalData = totalData.filter(add_time__month=month).order_by("add_time")
     totalNumber = totalData.count()
     

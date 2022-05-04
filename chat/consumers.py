@@ -186,7 +186,6 @@ class ChatConsumer(WebsocketConsumer):
         global testflag
         #print("goodbyte")
         
-        print("readyPeople_in", readyPeople_in)
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
@@ -233,6 +232,8 @@ class ChatConsumer(WebsocketConsumer):
 class ChatConsumer2(WebsocketConsumer):
     
     def connect(self):
+        global EnterGameKey
+        EnterGameKey = 0
         print("connect")
         global count
         global correct_people
@@ -285,6 +286,7 @@ class ChatConsumer2(WebsocketConsumer):
             print("[剩餘答題人數]:", check)
             if check == 0:#當系統偵測到所有人已達完題目
                 check_point = 1
+                EnterGameKey = 0
                 print("所有人答完題目了，目前pk:", nostalgiaGame_round_pk)
                 NostalgiaGame_round.objects.filter(pk=nostalgiaGame_round_pk).update(Correct_people=correct_people,Fail_people=error_people)
                 readyPeople_in = 0
@@ -358,6 +360,6 @@ class ChatConsumer2(WebsocketConsumer):
                 "EnterGameKey":EnterGameKey,
             #'readyPeopleNumber':readyPeopleNumber,
             }))
-        if EnterGameKey==1:
-            EnterGameKey = 0
+        # if EnterGameKey==1:
+        #     EnterGameKey = 0
     

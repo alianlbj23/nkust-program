@@ -202,6 +202,8 @@
         <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div>
         <div class="col-xs-12 col-sm-6 col-md-12" id="choice"></div> {% endcomment %}
     </div>
+    <div class="row" id="topic2">
+    </div>
 </div>
 <div class="container">
     <div id="after" class="after">
@@ -248,9 +250,9 @@
     chatSocket.onmessage = function(e){
         let data = JSON.parse(e.data)
         if(data.type === 'chat'){
+            
             check_point = data.check_point
             EnterGameKey = data.EnterGameKey
-            console.log("EnterGameKey", EnterGameKey)
             if(EnterGameKey==1){//start game
                 console.log("觸發")
                 $("#wait").css("display","none")
@@ -273,7 +275,6 @@
                     timer0.innerHTML = timer0.innerHTML - (-1);
                 }
             }
-            console.log("check_point",check_point)
             if(check_point==1){
                 $("#topic").css("display","none")
                 $("#after").removeClass("after").addClass("fadein")
@@ -313,6 +314,8 @@
 
     function test1(e){
         $("button").removeClass("choice").addClass("disabled")
+        console.log($(this).text())
+        
         if(e==ans){
             correct=1
         }
@@ -334,21 +337,17 @@
                 'nostalgiaGame_round_pk':nostalgiaGame_round_pk,
             },
             success: function(){
-                console.log("sucess")
             }
         })
-        console.log("correct_test", correct)
         chatSocket.send(JSON.stringify({
             "goBack":goBack,
             "correct":correct,
         }))
-        goBack = 0;
     }
 
     function timeout1(){
         var abc=0
         window.setTimeout(function() {
-            console.log("test")
             chatSocket.send(JSON.stringify({
                 'goBack':goBack,
             }))
